@@ -1,12 +1,68 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-<body>
+  <!DOCTYPE html>
+  <html lang="en">
+    <head>
+      <div>
   
-</body>
-</html>
+      <meta charset="UTF-8" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+      <script src="./index.js" defer></script>
+      <link rel="stylesheet" type="text/css" href="./styles.css" />
+      
+      <title>Document</title>
+    </head>
+    <body >
+      <object data="header.html"></object></div>
+      <!-- <textarea cols = "50" rows = "20" name="text" id="text_id" class="form-control" style="resize:vertical; display : 'none'"hidden></textarea>
+      <button class="button" onclick = "document.getElementById('text_id').style.display = 'block'" type="submit">add task</button> -->
+      <div> <form id="to_do_form">
+        <div >
+          <button
+            type="submit"
+            id="Create"
+            onclick="toggle()">Create</button>
+          </div>
+          <div id="show" style="display: none;">
+         <div><input
+            id="to_do_input"
+            class=""
+            placeholder="Enter Task"
+            value=""
+             >
+         </input><div>
+         <button
+            type="submit"
+            id="add_button"
+          >
+            Add
+          </button>
+        <!-- <button id="delete_add">  --> <img id="delete_add" src="./images/Vector.svg" alt="delete"><!-- </button> -->
+          </div>
+        </div>
+      </form>
+    
+    </div>
+    <section  >
+      <button class="top_button">All</button><button class="top_button">Incomplete</button><button class="top_button">Complete</button>
+    </section>
+      <section>
+        <div id="id01" class="container">
+
+</div>
+      </section>
+    </body>
+<!--   <script src="https://unpkg.com/@supabase/supabase-js"></script>
+  <script type="module">
+  
+  //console.log('Supabase Instance: ', supabase)
+  // ...
+</script> -->
+    <!-- <script>
+      const { createClient } = supabase;
+ const supabaseUrl = 'https://csnsvhmzohqmmlvjexpu.supabase.co'
+const supabaseKey = process.env.SUPABASE_KEY
+const supabase = createClient(supabaseUrl, supabaseKey)
+    </script> -->
+  </html>
+</div>
