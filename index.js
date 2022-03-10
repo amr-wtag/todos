@@ -1,5 +1,3 @@
-// const { add } = require("nodemon/lib/rules");
-
 var SUPABASE_URL = "https://csnsvhmzohqmmlvjexpu.supabase.co";
 var SUPABASE_KEY =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNzbnN2aG16b2hxbW1sdmpleHB1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2NDY2NDI1MTQsImV4cCI6MTk2MjIxODUxNH0.RaTg59kmRNNRQlfwFUhuOIzjbZujClUketfNBHRxEW8";
@@ -15,16 +13,9 @@ var edit = document.getElementById("edit");
 var delete_task = document.getElementById("delete_task");
 var h2 = document.getElementById("id01");
 showTasks();
-/* taskform && */
+
 taskform.addEventListener("submit", async function (e) {
   e.preventDefault();
-
-  //console.log(e);
-  /* if (document.getElementById("add_button") == e.target) {
-    console.log("add_button");
-  } */
-  /* insert query */
-  /*  */
 
   // fetch query
   /* const { data, error } = await supabase.from("todo").select();
@@ -36,6 +27,10 @@ taskform.addEventListener("submit", async function (e) {
 });
 
 // add value
+delete_add.addEventListener("click", async function (e) {
+  taskInput.value = "";
+  toggle();
+});
 add_button.addEventListener("click", async function (e) {
   //e.preventDefault();
   if (taskInput.value.length === 0) {
@@ -44,14 +39,17 @@ add_button.addEventListener("click", async function (e) {
     const { data, error } = await supabase
       .from("todo")
       .insert([{ name: taskInput.value }]);
+    var x = document.getElementById("show");
+    if (x.style.display === "block") {
+      x.style.display = "none";
+    }
     taskInput.value = "";
-    print(data[0]);
+    print(data[0]); // print value
   }
 });
 
 function toggle() {
   var x = document.getElementById("show");
-  //console.log(x.style.display);
   if (x.style.display === "none") {
     x.style.display = "block";
   } else {
@@ -64,39 +62,20 @@ async function showTasks() {
     .from("todo")
     .select()
     .order("id", { ascending: true });
-  // console.log(data);
-  //console.log(data);
+
   data.map((e) => {
     var div = document.createElement("div");
     var input = document.createElement("input");
     var h2 = document.createElement("h2");
-    //h2.id = e.id;
+    //h2.id = e.id; // add h2 tag id if needed
     div.onclick = function (e) {
       toggled(input);
     };
     print(e);
-    //h2.append(document.createTextNode("onclick='toggle()'"));
-    /* h2.classList.add("card");
-    h2.id = e.id;
-    input.id = e.id;
-    h2.value = e.name;
-    input.value = e.name;
-    input.style = "display: none;";
-    // h2.elementList.add("onclick='toggle()'");
-    // h2.insertAdjacentElement("onclick", "toggle()");
-    h2.appendChild(document.createTextNode(e.name));
-    div.appendChild(input);
-    div.appendChild(h2);
-    //console.log(h2);
-    document.getElementById("id01").appendChild(div); */
   });
 }
-// completed
+// complete
 async function completed(e) {
-  /* var tab = e.split("-");
-  var id = tab[1]; */
-  //var x = document.getElementById("show");
-
   const { data, error } = await supabase
     .from("todo")
     .update({ completed_on: new Date(Date.now()) })
@@ -105,10 +84,6 @@ async function completed(e) {
 
 // delete
 async function deleted(e) {
-  /* var tab = e.split("-");
-  var id = tab[1]; */
-  //var x = document.getElementById("show");
-
   const { data, error } = await supabase
     .from("todo")
     .delete()
@@ -118,11 +93,6 @@ async function deleted(e) {
 function saved() {}
 
 function toggled(input, h2, edit_button, save) {
-  /* var tab = e.split("-");
-  var id = tab[1]; */
-  //var x = document.getElementById("show");
-  //console.log(x.style.display);
-  //console.log(input.style.display);
   if (input.style.display === "none") {
     input.style.display = "block";
   } /* else {
@@ -142,7 +112,6 @@ function toggled(input, h2, edit_button, save) {
 }
 //print value
 function print(e) {
-  // console.log(e.id);
   var div = document.createElement("div");
   var button_div = document.createElement("div");
   var input = document.createElement("input");
@@ -155,6 +124,7 @@ function print(e) {
   complete_button.appendChild(document.createTextNode("complete"));
   delete_button.appendChild(document.createTextNode("delete"));
   save.appendChild(document.createTextNode("save"));
+  // may be need in future
   /*  complete_button.value = e.id;
   edit_button.value = e.id;
   delete_button.value = e.id; */
@@ -172,15 +142,12 @@ function print(e) {
   }
 
   button_div.appendChild(delete_button);
-  // console.log(button_div);
 
   edit_button.onclick = function (e) {
-    //console.log(input.display);
     toggled(input, h2, edit_button, save);
-    //console.log(div);
   };
+
   complete_button.onclick = function (e) {
-    // console.log("completed");
     button_div.removeChild(complete_button);
     button_div.removeChild(edit_button);
     completed(input);
@@ -192,7 +159,6 @@ function print(e) {
   };
 
   save.onclick = async function (e) {
-    //console.log(input.value);
     input.style = "display: none;";
     h2.style = "display: block;";
     edit_button.style = "display: block;";
@@ -201,8 +167,7 @@ function print(e) {
       .from("todo")
       .update({ name: input.value })
       .match({ id: input.id });
-    /* console.log(h2);
-    // */
+
     h2.innerHTML = "";
     h2.appendChild(document.createTextNode(input.value));
   };
@@ -216,14 +181,10 @@ function print(e) {
   h2.style = "display: block;";
   edit_button.style = "display: block;";
   save.style = "display: none";
-  //if (e.completed_on !== null) input.display.color = "green";
-  // h2.elementList.add("onclick='toggle()'");
-  // h2.insertAdjacentElement("onclick", "toggle()");
   h2.appendChild(document.createTextNode(e.name));
   div.appendChild(input);
 
   div.appendChild(h2);
   div.appendChild(button_div);
-  //console.log(button.value);
   document.getElementById("id01").appendChild(div);
 }
