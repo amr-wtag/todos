@@ -1,14 +1,12 @@
 body {
   /* text-align: center; */
 
-  padding-left: 5;
+  padding-left: 200px;
+  /*padding-right: 50; */
+  max-width: 1366px;
   background-color: #f8f9ff;
 }
-/* * {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-} */
+
 .container {
   display: flex;
   flex-direction: row;
@@ -40,4 +38,48 @@ body {
   width: 100px;
   height: 50px;
   justify-content: right;
+}
+.top {
+  display: flex;
+  padding-right: 100px;
+  height: 70px;
+  justify-content: right;
+}
+.create {
+  display: flex;
+  padding-left: 10px;
+
+  width: 70px;
+  height: 50px;
+  align-items: center;
+}
+.loadMoreBtnContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+rectangle {
+  border: none;
+  border-radius: 5px;
+  width: 150px;
+  padding: 6px;
+  font-size: 20px;
+  color: white;
+  background-color: #32394b;
+  cursor: pointer;
+}
+
+.divClass {
+  background: #ffffff;
+  border: 1px solid #dde2ff;
+  box-sizing: border-box;
+  border-radius: 5px;
+  font-size: 24px;
+}
+input {
+  background: #ffffff;
+  border: 3px solid #d1d8ff;
+  box-sizing: border-box;
+  border-radius: 5px;
+  font-size: 24px;
 }
