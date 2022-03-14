@@ -26,7 +26,6 @@ var currentIndex = 0;
 var currentCompletedIndex = 0;
 var currentIncompletedIndex = 0;
 showTasks();
-// console.log(searchInput);
 
 // show all tasks
 top_button_all.addEventListener("click", async function (e) {
@@ -110,12 +109,12 @@ function searchToggle() {
     const text = e.currentTarget.value;
 
     if (text.length > 2) {
-      document.getElementById("id01").innerHTML = "";
       const { data, error } = await supabase
         .from("todo")
         .select()
         .like("name", `%${text}%`);
-      // console.log(data[0].name);
+      console.log(data);
+      document.getElementById("id01").innerHTML = "";
       data.map((e) => {
         print(e);
       });
@@ -134,15 +133,14 @@ async function showTasks() {
     .from("todo")
     .select()
     .order("id", { ascending: true })
-    .range(currentIndex, currentIndex + 1);
-  // console.log(currentIndex);
+    .range(currentIndex, currentIndex + 5);
   data.map((e) => {
     print(e);
   });
 }
 
 function loadmore() {
-  currentIndex += 2;
+  currentIndex += 6;
   showTasks();
 }
 
@@ -158,7 +156,7 @@ async function showCompletedTasks() {
     .from("todo")
     .select()
     .order("id", { ascending: true })
-    .range(currentCompletedIndex, currentCompletedIndex + 1);
+    .range(currentCompletedIndex, currentCompletedIndex + 5);
 
   data.map((e) => {
     console.log(e.name);
@@ -166,7 +164,7 @@ async function showCompletedTasks() {
   });
 }
 function loadcompletedmore() {
-  currentCompletedIndex += 2;
+  currentCompletedIndex += 6;
   showCompletedTasks();
 }
 // show Incompleted tasks
@@ -182,14 +180,14 @@ async function showIncompletedTasks() {
     .select()
     .is("completed_on", null)
     .order("id", { ascending: true })
-    .range(currentIncompletedIndex, currentIncompletedIndex + 1);
+    .range(currentIncompletedIndex, currentIncompletedIndex + 5);
 
   data.map((e) => {
     print(e);
   });
 }
 function loadincompletedmore() {
-  currentIncompletedIndex += 2;
+  currentIncompletedIndex += 6;
   showIncompletedTasks();
 }
 // complete
@@ -312,7 +310,3 @@ function print(e) {
   document.getElementById("id01").appendChild(div);
   node = maindiv.childNodes;
 }
-/* var children = document.querySelectorAll("div");
-children[3].style.display = "block";
-console.log(children[3].style.display);
- */
