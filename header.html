@@ -4,14 +4,32 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <script src="./index.js" defer></script>
     <title>Header</title>
   </head>
   <body>
     <header class="header">
-      <img src="./images/leaf_1.svg" alt="logo" /><img
-        src="./images/Todos.svg"
-        alt="title"
-      />
+      <div>
+        <img src="./images/leaf_1.svg" alt="logo" /><img
+          src="./images/Todos.svg"
+          alt="title"
+        />
+      </div>
+      <div>
+        <input
+          id="searchInput"
+          placeholder="give at least 3 character"
+          value=""
+          style="display: none"
+        />
+        <img
+          id="'search"
+          onclick="searchToggle()"
+          src="./images/search.svg"
+          alt="search"
+        />
+      </div>
     </header>
   </body>
 </html>

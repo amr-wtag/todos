@@ -13,16 +13,41 @@
       <title>Document</title>
     </head>
     <body >
-      <object data="header.html"></object></div>
+      <!-- <object data="header.html"></object></div> -->
+       <header class="header">
+      <div>
+        <img src="./images/leaf_1.svg" alt="logo" /><img
+          src="./images/Todos.svg"
+          alt="title"
+        />
+      </div>
+      <div>
+        <input
+          id="searchInput"
+          placeholder="give at least 3 character"
+          value=""
+          style="display: none"
+        />
+        <img
+          id="'search"
+          onclick="searchToggle()"
+          src="./images/search.svg"
+          alt="search"
+        />
+      </div>
+    </header>
       <!-- may be used in future-->
       <!-- <textarea cols = "50" rows = "20" name="text" id="text_id" class="form-control" style="resize:vertical; display : 'none'"hidden></textarea>
       <button class="button" onclick = "document.getElementById('text_id').style.display = 'block'" type="submit">add task</button> -->
       <div> <form id="to_do_form">
+        <h1>Add Tasks</h1>
         <div >
           <button
             type="submit"
-            id="Create"
-            onclick="toggle()">Create</button>
+            id="Create" class="create"
+            onclick="toggle()">Create</button> <div class="top"  >
+      <button id="top_button_all">All</button><button id="top_button_incomplete">Incomplete</button><button id="top_button_complete">Complete</button>
+    </div>
           </div>
           <div id="show" style="display: none;">
          <div><input
@@ -44,13 +69,18 @@
       </form>
     
     </div>
-    <section  >
-      <button class="top_button">All</button><button class="top_button">Incomplete</button><button class="top_button">Complete</button>
-    </section>
+    
       <section>
         <div id="id01" class="container">
 
-</div>
+        </div>
+        <div id="loadMore" class="loadMoreBtnContainer" style="display: block;">
+          <rectangle onclick="loadmore()"style="display: block;">load more</rectangle>
+        </div><div id="loadCompletedMore" class="loadMoreBtnContainer" style="display: block;">
+          <rectangle onclick="loadcompletedmore()"style="display: block;">load more</rectangle>
+        </div><div id="loadIncompletedMore" class="loadMoreBtnContainer" style="display: block;">
+          <rectangle onclick="loadincompletedmore()"style="display: block;">load more</rectangle>
+        </div>
       </section>
     </body>
   </html>
