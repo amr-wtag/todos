@@ -1,34 +1,59 @@
 body {
   /* text-align: center; */
 
-  padding-left: 200px;
   /*padding-right: 50; */
-  max-width: 1366px;
+  /* max-width: 1366px;*/
+  margin: 0;
   background-color: #f8f9ff;
 }
-
+.fullBody {
+  display: flex;
+  flex-direction: column;
+  padding-left: 300px;
+  padding-right: 200px;
+}
 .container {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  align-items: stretch;
-  gap: 100px;
-  justify-content: center;
+  /* align-items: stretch; */
+  gap: 50px;
+  /* padding-left: 50px; */
+  /* justify-content: center; */
+  /* justify-content: space-around; */
 }
 .card {
+  display: flex;
+  flex-direction: row;
   background: white;
-  width: 220px;
-  height: auto;
+  top: 15px;
+  width: 351px;
+  height: 56px;
+  left: 16px;
   margin: 10px;
+  font-size: 24px;
 }
 .logo {
   display: flex;
   text-align: left;
 }
 .button {
+  display: flex;
   width: 100px;
   height: 50px;
-  justify-content: left;
+  /* justify-content: left; */
+}
+.button_div {
+  display: flex;
+  justify-content: space-between;
+  width: 100px;
+  height: 24px;
+  left: 2px;
+  top: 2px;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  gap: 6px;
 }
 .add_task {
   width: auto;
@@ -41,24 +66,26 @@ body {
 }
 .top {
   display: flex;
-  padding-right: 100px;
+  padding-right: 32px;
   height: 70px;
   justify-content: right;
 }
 .create {
   display: flex;
   padding-left: 10px;
-
-  width: 70px;
-  height: 50px;
+  background: #7a8dfd;
+  width: 104px;
+  height: 36px;
+  color: white;
+  border-radius: 5px;
+  border: 0px;
+  justify-content: space-evenly;
   align-items: center;
 }
 .loadMoreBtnContainer {
   display: flex;
   justify-content: center;
   align-items: center;
-}
-rectangle {
   border: none;
   border-radius: 5px;
   width: 150px;
@@ -68,18 +95,191 @@ rectangle {
   background-color: #32394b;
   cursor: pointer;
 }
+/* rectangle { */
+/* border: none;
+  border-radius: 5px;
+  width: 150px;
+  padding: 6px;
+  font-size: 20px;
+  color: white;
+  background-color: #32394b;
+  cursor: pointer; */
+/* } */
 
 .divClass {
+  display: flex;
+  flex-direction: column;
   background: #ffffff;
   border: 1px solid #dde2ff;
   box-sizing: border-box;
   border-radius: 5px;
-  font-size: 24px;
+  size: 24px;
+  width: 382px;
+  height: 200px;
+  justify-content: space-between;
+  /* radius: 5px; */
 }
 input {
+  width: 518px;
+  height: 36px;
   background: #ffffff;
   border: 3px solid #d1d8ff;
   box-sizing: border-box;
   border-radius: 5px;
   font-size: 24px;
+}
+.addTaskH1 {
+  /* position: absolute;
+  left: 0.08%;
+  right: 71%;
+  top: 0%;
+  bottom: 64.65%; */
+
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 35px;
+
+  color: #32394b;
+}
+.rotateFull {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  /* width: 100%;
+  height: 100%; */
+  z-index: 9999;
+  /* mix-blend-mode: Pass through; */
+}
+.rotateDiv {
+  display: flex;
+  width: 50px;
+  height: 47.36px;
+  top: 23.68px;
+  /* position: relative; */
+  left: 66.02px;
+  text-align: middle;
+  /*top: 50%; */
+  /* width: 100%;
+  height: 100%; */
+  /* z-index: 9999; */
+}
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes fadeOut {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.fadeout {
+  animation: fadeOut 2s infinite;
+}
+.spinning {
+  animation: spin 2s infinite;
+}
+
+h6 {
+  width: 160px;
+  height: 16px;
+  top: 80px;
+  left: 16px;
+  font-size: 14px;
+  font: Roboto;
+  font-weight: 700, bold;
+  line-height: 16.41px;
+  padding-left: 10px;
+}
+.complete_date {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: space-around;
+  justify-content: space-around;
+  font-size: 15px;
+  justify-content: space-around;
+  color: white;
+  /* margin-left: 205px; */
+  width: 134px;
+  height: 24px;
+  left: 233px;
+  top: 120px;
+  background: #7a8dfd;
+  border-radius: 5px;
+}
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  width: 100%;
+  margin: auto;
+  height: 72px;
+  background: #ffffff;
+  border: 1px solid #dde2ff;
+  /* justify-content: space-around; */
+  align-content: center;
+  padding-right: 2000px;
+  padding-left: 300px;
+  gap: 1100px;
+}
+.searchDiv {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+.button_complete {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 20px;
+}
+.headerClass {
+  display: flex;
+  flex-wrap: wrap;
+  /*  */
+  justify-content: space-between;
+}
+.topButton {
+  display: flex;
+  width: 350px;
+  height: 36px;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-around;
+  padding-right: 219px;
+}
+#top_button_all,
+#top_button_complete,
+#top_button_incomplete {
+  width: 104px;
+  height: 36px;
+  background: #ffffff;
+  border: 1px solid #dde2ff;
+  border-radius: 5px;
+}
+.createdAt_spin {
+  display: flex;
+  align-items: center;
+}
+.boxed_button {
+  border: none;
+  background: none;
+}
+textarea {
+  size: 24px;
+  width: 382px;
+  height: 100px;
+  font-size: 16pt;
+  background: #ffffff;
+  border: 3px solid #d1d8ff;
+  box-sizing: border-box;
+  border-radius: 5px;
 }
