@@ -3,8 +3,13 @@ var SUPABASE_KEY =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNzbnN2aG16b2hxbW1sdmpleHB1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2NDY2NDI1MTQsImV4cCI6MTk2MjIxODUxNH0.RaTg59kmRNNRQlfwFUhuOIzjbZujClUketfNBHRxEW8";
 
 var supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+console.log(supabase);
+var splash = document.getElementById("splash");
+
+var datacount = 0;
 var flag = "all";
 var addFlag = 0;
+var ul_list = document.getElementById("toasted");
 var create = document.getElementById("Create");
 var maindiv = document.getElementById("id01");
 var taskform = document.getElementById("to_do_form");
@@ -14,7 +19,6 @@ var add_button = document.getElementById("add_button");
 var delete_add = document.getElementById("delete_add");
 var complete = document.getElementById("complete");
 var edit = document.getElementById("edit");
-// var searchInput = document.getElementById("searchInput");
 var search = document.getElementById("search");
 
 var delete_task = document.getElementById("delete_task");
@@ -31,13 +35,49 @@ var currentCompletedIndex = 0;
 var currentIncompletedIndex = 0;
 var bigspin = document.getElementById("bigspin");
 
+//toast
+const Toast = {
+  show(message, state) {
+    var image = document.createElement("img");
+    var li = document.createElement("div");
+    if (state === "success") {
+      image.src = "./images/success.svg";
+      image.alt = "tick";
+      li.appendChild(image);
+    }
+    li.appendChild(document.createTextNode(message));
+    ul_list.appendChild(li);
+    li.classList = "toast toast--visible";
+
+    if (state) {
+      li.classList.add(`toast--${state}`);
+    }
+    {
+      var count = ul_list.childElementCount;
+      while (count--) {
+        setTimeout(() => {
+          ul_list.removeChild(ul_list.children[0]);
+        }, 1000);
+      }
+    }
+  },
+};
+
+// check if database is empty
 async function checkEmpty() {
-  const { data, error } = await supabase.from("todo").select();
-  if (data.length === 0) {
-    top_button_all.disabled = true;
-    top_button_complete.disabled = true;
-    top_button_incomplete.disabled = true;
-    search.disabled = true;
+  try {
+    const { data, error } = await supabase.from("todo").select();
+
+    if (data.length === 0) {
+      document.getElementById("emptyScreen").style = "display:block";
+      loadMore.style = "display:none";
+      top_button_all.disabled = true;
+      top_button_complete.disabled = true;
+      top_button_incomplete.disabled = true;
+      search.disabled = true;
+    }
+  } catch (e) {
+    Toast.show(e, "Failed to fetch data");
   }
 }
 checkEmpty();
@@ -89,13 +129,6 @@ taskform.addEventListener("submit", async function (e) {
   e.preventDefault();
 });
 
-// fetch query
-/* const { data, error } = await supabase.from("todo").select();
-  console.log(data);
-  h2.appendChild(document.createTextNode(data[0].name));
-  document.getElementById("id01").appendChild(h2);
-  console.log(h2); */
-// showTasks();
 showForm.addEventListener("submit", async function (e) {
   e.preventDefault();
 });
@@ -113,40 +146,53 @@ add_button.addEventListener("click", async function (e) {
   var spin = document.createElement("img");
   spin.src = "./images/bigspin.svg";
   spin.alt = "spin";
-  spin.style = "display:block";
   spin.classList = "spinning rotateDiv";
   addFlag = 1;
   if (taskInput.value.length === 0) {
-    alert("Task can not be empty");
+    Toast.show("Task can not be empty", "error");
   } else {
-    spin.style = "display:block";
-    const { data, error } = await supabase
-      .from("todo")
-      .insert([{ name: taskInput.value, created_at: new Date(Date.now()) }]);
     var x = document.getElementById("show");
-    if (x.style.display === "block") {
-      x.style.display = "none";
-      console.log(x.style.display);
-    }
-    taskInput.value = "";
 
-    if (top_button_all.disabled === true) {
-      top_button_all.disabled = false;
-      top_button_complete.disabled = false;
-      top_button_incomplete.disabled = false;
-      search.disabled = false;
-    }
+    spin.style = "display:block";
+    document.getElementById("createspin").style = "display:block";
+    delete_add.classList.add("blur");
+    add_button.classList.add("blur");
+    taskInput.classList.add("blur");
+    try {
+      const { data, error } = await supabase
+        .from("todo")
+        .insert([{ name: taskInput.value, created_at: new Date(Date.now()) }]);
 
-    print(data[0]); // print value
-    spin.style = "display:none";
+      if (x.style.display === "block") {
+        x.style.display = "none";
+      }
+      taskInput.value = "";
+      datacount++;
+      if (datacount > 5) loadMore.style = "display:block";
+      if (top_button_all.disabled === true) {
+        top_button_all.disabled = false;
+        top_button_complete.disabled = false;
+        top_button_incomplete.disabled = false;
+        search.disabled = false;
+      }
+      delete_add.classList.remove("blur");
+      add_button.classList.remove("blur");
+      taskInput.classList.remove("blur");
+      document.getElementById("createspin").style = "display:none";
+      spin.style = "display:none";
+      document.getElementById("emptyScreen").style = "display:none";
+      if (flag !== "complete") print(data[0]); // print value
+
+      Toast.show("added", "success");
+    } catch (e) {
+      Toast.show(e, "error");
+    }
   }
 });
 
 function toggle() {
-  // taskInput.value = null;
   setTimeout(() => {
     taskInput.focus();
-    // taskInput.placeholder = "Enter Task";
   }, 0);
   var x = document.getElementById("show");
   if (x.style.display === "none") {
@@ -162,35 +208,54 @@ taskInput.onkeyup = async function (e) {
   if (e.key == "Enter") {
     taskInput.value = taskInput.value.trim("\n");
 
-    console.log(taskInput.value.length);
+    taskInput.value = taskInput.value.trim("\n");
     var spin = document.createElement("img");
     spin.src = "./images/bigspin.svg";
     spin.alt = "spin";
-    spin.style = "display:block";
     spin.classList = "spinning rotateDiv";
     addFlag = 1;
     if (taskInput.value.length === 0) {
-      alert("Task can not be empty");
+      Toast.show("Task can not be empty", "error");
     } else {
-      spin.style = "display:block";
-      const { data, error } = await supabase
-        .from("todo")
-        .insert([{ name: taskInput.value, created_at: new Date(Date.now()) }]);
       var x = document.getElementById("show");
-      if (x.style.display === "block") {
-        x.style.display = "none";
-      }
-      taskInput.value = "";
 
-      if (top_button_all.disabled === true) {
-        top_button_all.disabled = false;
-        top_button_complete.disabled = false;
-        top_button_incomplete.disabled = false;
-        search.disabled = false;
-      }
+      spin.style = "display:block";
+      document.getElementById("createspin").style = "display:block";
+      delete_add.classList.add("blur");
+      add_button.classList.add("blur");
+      taskInput.classList.add("blur");
+      try {
+        const { data, error } = await supabase
+          .from("todo")
+          .insert([
+            { name: taskInput.value, created_at: new Date(Date.now()) },
+          ]);
 
-      print(data[0]); // print value
-      spin.style = "display:none";
+        if (x.style.display === "block") {
+          x.style.display = "none";
+        }
+        taskInput.value = "";
+        document.getElementById("createspin").style = "display:none";
+        datacount++;
+        if (datacount > 5) loadMore.style = "display:block";
+        if (top_button_all.disabled === true) {
+          top_button_all.disabled = false;
+          top_button_complete.disabled = false;
+          top_button_incomplete.disabled = false;
+          search.disabled = false;
+        }
+        delete_add.classList.remove("blur");
+        add_button.classList.remove("blur");
+        taskInput.classList.remove("blur");
+
+        spin.style = "display:none";
+        if (flag !== "complete") print(data[0]); // print value
+        document.getElementById("emptyScreen").style = "display:none";
+
+        Toast.show("added", "success");
+      } catch (e) {
+        Toast.show(e, "error");
+      }
     }
   }
 };
@@ -198,7 +263,9 @@ taskInput.onkeyup = async function (e) {
 //open search field
 function searchToggle() {
   var x = document.getElementById("searchInput");
-  // console.log(x);
+  setTimeout(() => {
+    x.focus();
+  }, 0);
   if (x.style.display === "none") {
     x.style.display = "block";
   } else {
@@ -208,37 +275,61 @@ function searchToggle() {
   x.addEventListener("keyup", async (e) => {
     e.preventDefault();
     const text = e.currentTarget.value;
-
+    var blur = document.getElementById("id01");
     if (text.length > 2) {
       bigspin.style = "display:block";
-      const { data, error } = await supabase
-        .from("todo")
-        .select()
-        .like("name", `%${text}%`);
-      var count = document.getElementById("id01").childElementCount;
-      for (var i = 1; i < count; i++) {
-        document
-          .getElementById("id01")
-          .removeChild(document.getElementById("id01").children[1]);
+      blur.classList.add("blur");
+      if (flag == "all" || flag == "complete") {
+        const { data, error } = await supabase
+          .from("todo")
+          .select()
+          .like("name", `%${text}%`);
+        var count = document.getElementById("id01").childElementCount;
+        for (var i = 1; i < count; i++) {
+          document
+            .getElementById("id01")
+            .removeChild(document.getElementById("id01").children[1]);
+        }
+        data.map((e) => {
+          if (flag == "complete") {
+            if (e.completed_on !== null) print(e);
+          } else print(e);
+        });
+      } else {
+        const { data, error } = await supabase
+          .from("todo")
+          .select()
+          .like("name", `%${text}%`)
+          .is("completed_on", null);
+        var count = document.getElementById("id01").childElementCount;
+        for (var i = 1; i < count; i++) {
+          document
+            .getElementById("id01")
+            .removeChild(document.getElementById("id01").children[1]);
+        }
+        data.map((e) => {
+          print(e);
+        });
       }
-      data.map((e) => {
-        print(e);
-      });
+
       bigspin.style = "display:none";
-    }
-    if (text.length === 0) {
-      // bigspin.style = "display:block";
-      console.log(bigspin.style.display);
+    } else if (text.length === 0) {
       var count = document.getElementById("id01").childElementCount;
+      bigspin.style = "display:block";
+      blur.classList.add("blur");
       for (var i = 1; i < count; i++) {
         document
           .getElementById("id01")
           .removeChild(document.getElementById("id01").children[1]);
       }
 
-      showTasks();
-      // bigspin.style = "display:none";
+      blur.classList.remove("blur");
+      bigspin.style = "display:none";
+      if (flag == "all") showTasks();
+      else if (flag == "complete") showCompletedTasks();
+      else showIncompletedTasks();
     }
+    blur.classList.remove("blur");
   });
 }
 // show tasks
@@ -248,21 +339,28 @@ async function showTasks() {
   if (x.style.display === "block") {
     x.style.display = "none";
   }
-  loadMore.style = "display:block";
   loadIncompletedMore.style = "display:none";
   loadCompletedMore.style = "display:none";
   currentCompletedIndex = 0;
   currentIncompletedIndex = 0;
-  bigspin.style = "display:block";
+  if (splash.style.display !== "block") bigspin.style = "display:block";
+  document.getElementById("id01").classList.add("blur");
+
   const { data, error } = await supabase
     .from("todo")
     .select()
     .order("id", { ascending: false })
     .range(currentIndex, currentIndex + 5);
-
+  datacount = data.length;
+  if (datacount > 5) loadMore.style = "display:block";
   data.map((e) => {
     print(e);
   });
+  if (splash.style.display == "block") {
+    splash.classList.add("display-none");
+    splash.style = "display:none";
+  }
+  document.getElementById("id01").classList.remove("blur");
   bigspin.style = "display:none";
 }
 
@@ -283,18 +381,18 @@ async function showCompletedTasks() {
   currentIncompletedIndex = 0;
   currentIndex = 0;
   bigspin.style = "display:block";
+  document.getElementById("id01").classList.add("blur");
   const { data, error } = await supabase
     .from("todo")
     .select()
     .order("id", { ascending: false })
     .range(currentCompletedIndex, currentCompletedIndex + 5);
 
-  console.log(data[0]);
-  if (data === null) console.log("empty");
   data.map((e) => {
     if (e.completed_on !== null) print(e);
   });
   bigspin.style = "display:none";
+  document.getElementById("id01").classList.remove("blur");
 }
 function loadcompletedmore() {
   currentCompletedIndex += 6;
@@ -312,6 +410,7 @@ async function showIncompletedTasks() {
   currentCompletedIndex = 0;
   currentIndex = 0;
   bigspin.style = "display:block";
+  document.getElementById("id01").classList.add("blur");
   const { data, error } = await supabase
     .from("todo")
     .select()
@@ -322,6 +421,7 @@ async function showIncompletedTasks() {
   data.map((e) => {
     print(e);
   });
+  document.getElementById("id01").classList.remove("blur");
   bigspin.style = "display:none";
 }
 function loadincompletedmore() {
@@ -342,26 +442,23 @@ async function deleted(e) {
     .from("todo")
     .delete()
     .match({ id: e.id });
-  if (data.length === 0) {
+  datacount--;
+  if (datacount < 6) loadMore.style = "display:none";
+  if (datacount < 1) {
+    document.getElementById("emptyScreen").style = "display:block";
     top_button_all.disabled = true;
     top_button_complete.disabled = true;
     top_button_incomplete.disabled = true;
   }
 }
 
-/* function saved() {} */
-
 function toggled(input, h2, edit_button, save) {
   if (input.style.display === "none") {
     input.style.display = "block";
-  } /* else {
-    e.style.display = "none";
-  } */
+  }
   if (h2.style.display === "block") {
     h2.style.display = "none";
-  } /* else {
-    f.style.display = "block";
-  } */
+  }
   if (edit_button.style.display === "block") {
     edit_button.style.display = "none";
   }
@@ -372,6 +469,7 @@ function toggled(input, h2, edit_button, save) {
 //print value
 function print(e) {
   var div = document.createElement("div");
+  var textarea_h2_div = document.createElement("div");
   var button_div = document.createElement("div");
   var createdAt_spin = document.createElement("div");
   var input = document.createElement("textarea");
@@ -391,10 +489,6 @@ function print(e) {
 
   save.appendChild(document.createTextNode("save"));
   save.type = "submit";
-  // may be need in future
-  /*  complete_button.value = e.id;
-  edit_button.value = e.id;
-  delete_button.value = e.id; */
   completed.classList = "complete_date";
   actual_complete_button.src = "./images/tick.svg";
   actual_complete_button.alt = "tick";
@@ -424,9 +518,8 @@ function print(e) {
   edit_button.onclick = function (e) {
     e.preventDefault();
     setTimeout(() => {
-      input.focus(); /* , input.select(); */
+      input.focus();
     }, 0);
-    // input.autofocus = true;
     h6.style = "display:none";
     toggled(input, h2, edit_button, save);
     document.getElementById("show").style.display = "none";
@@ -445,16 +538,21 @@ function print(e) {
     button_div.removeChild(complete_button);
     button_div.removeChild(edit_button);
     completedTask(input);
-    if (flag === "all") {
-      difference = Date.parse(new Date(Date.now())) - created_at_date;
-      days = Math.ceil(difference / (1000 * 3600 * 24));
-      h2.style = "color: #0BC375;text-decoration: line-through;";
-      completed.appendChild(
-        document.createTextNode(`Completed in ${days} days`),
-      );
-      button_complete.appendChild(completed);
-    } else if (flag === "incomplete")
-      document.getElementById("id01").removeChild(div);
+    try {
+      if (flag === "all") {
+        difference = Date.parse(new Date(Date.now())) - created_at_date;
+        days = Math.ceil(difference / (1000 * 3600 * 24));
+        h2.style = "color: #0BC375;text-decoration: line-through;";
+        completed.appendChild(
+          document.createTextNode(`Completed in ${days} days`),
+        );
+        button_complete.appendChild(completed);
+      } else if (flag === "incomplete")
+        document.getElementById("id01").removeChild(div);
+      Toast.show("Task Completed", "success");
+    } catch (e) {
+      Toast.show(e, "error");
+    }
     spin.style = "display:none";
   };
 
@@ -463,16 +561,9 @@ function print(e) {
     spin.style = "display:block";
 
     deleted(input);
+    Toast.show("Deleted task", "success");
     document.getElementById("id01").removeChild(div);
-    const { data, error } = await supabase
-      .from("todo")
-      .select()
-      .order("id", { ascending: false })
-      .range(currentIndex + 5, currentIndex + 5);
 
-    data.map((e) => {
-      print(e);
-    });
     spin.style = "display:none";
   };
 
@@ -486,22 +577,30 @@ function print(e) {
     edit_button.style = "display: block;";
     save.style = "display: none";
     spin.style = "display:block";
-    const { data, error } = await supabase
-      .from("todo")
-      .update({ name: input.value })
-      .match({ id: input.id });
 
+    h2.classList.add("blur");
+    h6.classList.add("blur");
+    button_div.classList.add("blur");
+    try {
+      const { data, error } = await supabase
+        .from("todo")
+        .update({ name: input.value })
+        .match({ id: input.id });
+      Toast.show("Changes are saved successfully", "success");
+    } catch (e) {
+      Toast.show(e, "error");
+    }
     h2.innerHTML = "";
     h2.appendChild(document.createTextNode(input.value));
+    h2.classList.remove("blur");
+    h6.classList.remove("blur");
+    button_div.classList.remove("blur");
     spin.style = "display:none";
   };
 
   // enter press
   input.onkeyup = async function (e) {
     e.preventDefault();
-    /* setTimeout(() => {
-      input.focus(), input.select();
-    }, 0); */
 
     if (e.key == "Enter") {
       create.disabled = false;
@@ -512,13 +611,23 @@ function print(e) {
       edit_button.style = "display: block;";
       save.style = "display: none";
       spin.style = "display:block";
-      const { data, error } = await supabase
-        .from("todo")
-        .update({ name: input.value })
-        .match({ id: input.id });
-
+      h2.classList.add("blur");
+      h6.classList.add("blur");
+      button_div.classList.add("blur");
+      try {
+        const { data, error } = await supabase
+          .from("todo")
+          .update({ name: input.value })
+          .match({ id: input.id });
+        Toast.show("Changes are saved successfully", "success");
+      } catch (e) {
+        Toast.show(e, "error");
+      }
       h2.innerHTML = "";
       h2.appendChild(document.createTextNode(input.value));
+      h2.classList.remove("blur");
+      h6.classList.remove("blur");
+      button_div.classList.remove("blur");
       spin.style = "display:none";
     }
   };
@@ -547,11 +656,12 @@ function print(e) {
   if (e.completed_on !== null) {
     difference = Date.parse(e.completed_on) - Date.parse(e.created_at);
     days = Math.ceil(difference / (1000 * 3600 * 24));
-    // console.log(days);
   }
   createdAt_spin.classList = "createdAt_spin";
-  div.appendChild(input);
-  div.appendChild(h2);
+
+  textarea_h2_div.appendChild(input);
+  textarea_h2_div.appendChild(h2);
+  div.appendChild(textarea_h2_div);
   createdAt_spin.appendChild(spin);
   div.appendChild(createdAt_spin);
   button_complete.classList = "button_complete";
@@ -561,7 +671,6 @@ function print(e) {
     button_complete.appendChild(completed);
   }
   div.appendChild(button_complete);
-  // console.log(div);
 
   if (addFlag === 1) {
     document.getElementById("id01").prepend(div);

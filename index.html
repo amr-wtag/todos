@@ -1,6 +1,10 @@
   <!DOCTYPE html>
   <html lang="en">
     <head>
+      <div id="splash" class="splash" style="display: block;">
+       <div ><img src="./images/splash_leaf.svg" alt="splash_leaf"> <img src="./images/splash_Todos.svg" alt="splash_Todos">
+        </div>
+      </div>
       <div>
   <header class="header">
       <div>
@@ -35,11 +39,10 @@
       <title>Document</title>
     </head>
     <body >
-      <!-- <object data="header.html"></object></div> -->
-       
-      <!-- may be used in future-->
-      <!-- <textarea cols = "50" rows = "20" name="text" id="text_id" class="form-control" style="resize:vertical; display : 'none'"hidden></textarea>
-      <button class="button" onclick = "document.getElementById('text_id').style.display = 'block'" type="submit">add task</button> -->
+      
+     <div id="toasted" >
+       <!-- <ul id="ul_list" class="toast toast--visible"></ul> -->
+     </div>
       <div class="fullBody">
       <div > 
         <form id="to_do_form">
@@ -57,7 +60,7 @@
       </form>
     
     </div>
-    
+      
     <section>
       <form id="show_form">
       <div id="id01" class="container">
@@ -65,17 +68,18 @@
          <div><textarea
             id="to_do_input"
             class="to_do"
-            placeholder="Enter Task"
+            
             value=""
              >
-         </textarea><div>
-         <button
+         </textarea><div ><img src="./images/bigspin.svg" id="createspin" class="spinning rotateDiv " alt="createspin" style="display: none;" >
+        <div class="add_del"> <button
             type="submit"
             id="add_button"
+            class="add_button"
           >
             Add
           </button>
-         <img id="delete_add" src="./images/Vector.svg" alt="delete">
+        <button id="delete_add" class="boxed_button"> <img id="delete_add" src="./images/Vector.svg" alt="delete"></button></div>
           </div>
         </div>
       </div>
@@ -84,7 +88,7 @@
   <section>
   <img src="./images/bigspin.svg" id="bigspin" class="spinning rotateFull" alt="bigspin" style="display: none;" >
  </section>
-<br/><br/>
+
 
   <section>
     
@@ -97,7 +101,8 @@
         </div><div id="loadIncompletedMore" class="loadMoreBtnContainer" style="display: block;">
           <rectangle onclick="loadincompletedmore()"style="display: block;">load more</rectangle>
         </div></div>
-        </div></section>
+        </div>
+      </section>
         <div id="no_show"><div id="show" class="divClass" style="display: none;">
          <div><input
             id="to_do_input"
@@ -114,7 +119,14 @@
           </button>
          <img id="delete_add" src="./images/Vector.svg" alt="delete">
           </div>
-        </div></div>
+        </div></div></div>
+        <section>
+          <div id="emptyScreen" class="emptyScreen" style="display:none"><br><br><br><br>
+          <br><br><br><br><br><br><br><br>
+            <img src="./images/undraw_add_files_re_v09g 1.svg" alt="emptyScreen"/><br>
+            <img src="./images/You didn’t add any task. Please, add one..svg" alt="didn’t"/>
+          </div>
+        </section>
     </body>
   </html>
 </div>
