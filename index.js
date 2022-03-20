@@ -6,7 +6,7 @@ var supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 console.log(supabase);
 var splash = document.getElementById("splash");
 
-var datacount = 0;
+var datacount = 1;
 var flag = "all";
 var addFlag = 0;
 var ul_list = document.getElementById("toasted");
@@ -67,7 +67,7 @@ const Toast = {
 async function checkEmpty() {
   try {
     const { data, error } = await supabase.from("todo").select();
-
+    datacount = data.length;
     if (data.length === 0) {
       document.getElementById("emptyScreen").style = "display:block";
       loadMore.style = "display:none";
@@ -168,7 +168,7 @@ add_button.addEventListener("click", async function (e) {
       }
       taskInput.value = "";
       datacount++;
-      if (datacount > 5) loadMore.style = "display:block";
+      // if (datacount > 5) loadMore.style = "display:block";
       if (top_button_all.disabled === true) {
         top_button_all.disabled = false;
         top_button_complete.disabled = false;
@@ -237,7 +237,7 @@ taskInput.onkeyup = async function (e) {
         taskInput.value = "";
         document.getElementById("createspin").style = "display:none";
         datacount++;
-        if (datacount > 5) loadMore.style = "display:block";
+        // if (datacount > 5) loadMore.style = "display:block";
         if (top_button_all.disabled === true) {
           top_button_all.disabled = false;
           top_button_complete.disabled = false;
@@ -346,13 +346,13 @@ async function showTasks() {
   if (splash.style.display !== "block") bigspin.style = "display:block";
   document.getElementById("id01").classList.add("blur");
 
+  loadMore.style = "display:none";
   const { data, error } = await supabase
     .from("todo")
     .select()
     .order("id", { ascending: false })
     .range(currentIndex, currentIndex + 5);
-  datacount = data.length;
-  if (datacount > 5) loadMore.style = "display:block";
+  // datacount = data.length;
   data.map((e) => {
     print(e);
   });
@@ -361,7 +361,9 @@ async function showTasks() {
     splash.style = "display:none";
   }
   document.getElementById("id01").classList.remove("blur");
+
   bigspin.style = "display:none";
+  loadMore.style = "display:block";
 }
 
 function loadmore() {
@@ -377,10 +379,11 @@ async function showCompletedTasks() {
   }
   loadMore.style = "display:none";
   loadIncompletedMore.style = "display:none";
-  loadCompletedMore.style = "display:block";
   currentIncompletedIndex = 0;
   currentIndex = 0;
   bigspin.style = "display:block";
+  loadCompletedMore.style = "display:none";
+
   document.getElementById("id01").classList.add("blur");
   const { data, error } = await supabase
     .from("todo")
@@ -392,6 +395,8 @@ async function showCompletedTasks() {
     if (e.completed_on !== null) print(e);
   });
   bigspin.style = "display:none";
+  loadCompletedMore.style = "display:block";
+
   document.getElementById("id01").classList.remove("blur");
 }
 function loadcompletedmore() {
@@ -406,10 +411,11 @@ async function showIncompletedTasks() {
   }
   loadMore.style = "display:none";
   loadCompletedMore.style = "display:none";
-  loadIncompletedMore.style = "display:block";
   currentCompletedIndex = 0;
   currentIndex = 0;
   bigspin.style = "display:block";
+  loadIncompletedMore.style = "display:none";
+
   document.getElementById("id01").classList.add("blur");
   const { data, error } = await supabase
     .from("todo")
@@ -423,6 +429,7 @@ async function showIncompletedTasks() {
   });
   document.getElementById("id01").classList.remove("blur");
   bigspin.style = "display:none";
+  loadIncompletedMore.style = "display:block";
 }
 function loadincompletedmore() {
   currentIncompletedIndex += 6;
@@ -443,7 +450,7 @@ async function deleted(e) {
     .delete()
     .match({ id: e.id });
   datacount--;
-  if (datacount < 6) loadMore.style = "display:none";
+  // if (datacount < 6) loadMore.style = "display:none";
   if (datacount < 1) {
     document.getElementById("emptyScreen").style = "display:block";
     top_button_all.disabled = true;
@@ -473,8 +480,9 @@ function print(e) {
   var button_div = document.createElement("div");
   var createdAt_spin = document.createElement("div");
   var input = document.createElement("textarea");
-  var h2 = document.createElement("h2");
-  var h6 = document.createElement("h6");
+  var h2 = document.createElement("label");
+  var h6 = document.createElement("label");
+  h6.classList = "h6_class";
   var button_complete = document.createElement("div");
   var created_at_date = Date.parse(e.created_at);
   var complete_button = document.createElement("button");
