@@ -3,7 +3,7 @@ var SUPABASE_KEY =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNzbnN2aG16b2hxbW1sdmpleHB1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2NDY2NDI1MTQsImV4cCI6MTk2MjIxODUxNH0.RaTg59kmRNNRQlfwFUhuOIzjbZujClUketfNBHRxEW8";
 
 var supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-console.log(supabase);
+
 var splash = document.getElementById("splash");
 
 var datacount = 1;
@@ -364,7 +364,7 @@ async function showTasks() {
 
   bigspin.style = "display:none";
   loadMore.style = "display:block";
-  if (data.length < 5) {
+  if (data.length < 6) {
     loadMore.style = "display:none";
     currentIndex = 0;
   }
@@ -396,14 +396,13 @@ async function showCompletedTasks() {
     .not("completed_on", "is", null)
     .range(currentCompletedIndex, currentCompletedIndex + 5);
 
-  console.log(data);
   data.map((e) => {
     print(e);
   });
   bigspin.style = "display:none";
   loadCompletedMore.style = "display:block";
   loadCompletedMore.style = "display:none";
-  if (data.length < 5) {
+  if (data.length < 6) {
     loadCompletedMore.style = "display:none";
     currentCompletedIndex = 0;
   }
@@ -440,7 +439,7 @@ async function showIncompletedTasks() {
   document.getElementById("id01").classList.remove("blur");
   bigspin.style = "display:none";
   loadIncompletedMore.style = "display:block";
-  if (data.length < 5) {
+  if (data.length < 6) {
     loadIncompletedMore.style = "display:none";
     currentIncompletedIndex = 0;
   }
