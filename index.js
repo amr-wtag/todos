@@ -282,6 +282,9 @@ function searchToggle() {
     var blur = document.getElementById("id01");
     if (text.length > 2) {
       bigspin.style = "display:block";
+      top_button_all.disabled = true;
+      top_button_complete.disabled = true;
+      top_button_incomplete.disabled = true;
       blur.classList.add("blur");
       if (flag == "all" || flag == "complete") {
         const { data, error } = await supabase
@@ -317,9 +320,15 @@ function searchToggle() {
       }
 
       bigspin.style = "display:none";
+      top_button_all.disabled = false;
+      top_button_complete.disabled = false;
+      top_button_incomplete.disabled = false;
     } else if (text.length === 0) {
       var count = document.getElementById("id01").childElementCount;
       bigspin.style = "display:block";
+      top_button_all.disabled = true;
+      top_button_complete.disabled = true;
+      top_button_incomplete.disabled = true;
       blur.classList.add("blur");
       for (var i = 1; i < count; i++) {
         document
@@ -329,6 +338,9 @@ function searchToggle() {
 
       blur.classList.remove("blur");
       bigspin.style = "display:none";
+      top_button_all.disabled = false;
+      top_button_complete.disabled = false;
+      top_button_incomplete.disabled = false;
       if (flag == "all") showTasks();
       else if (flag == "complete") showCompletedTasks();
       else showIncompletedTasks();
@@ -347,7 +359,12 @@ async function showTasks() {
   loadCompletedMore.style = "display:none";
   currentCompletedIndex = 0;
   currentIncompletedIndex = 0;
-  if (splash.style.display !== "block") bigspin.style = "display:block";
+  if (splash.style.display !== "block") {
+    bigspin.style = "display:block";
+    top_button_all.disabled = true;
+    top_button_complete.disabled = true;
+    top_button_incomplete.disabled = true;
+  }
   document.getElementById("id01").classList.add("blur");
 
   loadMore.style = "display:none";
@@ -367,6 +384,9 @@ async function showTasks() {
   document.getElementById("id01").classList.remove("blur");
 
   bigspin.style = "display:none";
+  top_button_all.disabled = false;
+  top_button_complete.disabled = false;
+  top_button_incomplete.disabled = false;
   loadMore.style = "display:block";
   if (data.length < 6) {
     loadMore.style = "display:none";
@@ -390,6 +410,9 @@ async function showCompletedTasks() {
   currentIncompletedIndex = 0;
   currentIndex = 0;
   bigspin.style = "display:block";
+  top_button_all.disabled = true;
+  top_button_complete.disabled = true;
+  top_button_incomplete.disabled = true;
   loadCompletedMore.style = "display:none";
 
   document.getElementById("id01").classList.add("blur");
@@ -404,6 +427,9 @@ async function showCompletedTasks() {
     print(e);
   });
   bigspin.style = "display:none";
+  top_button_all.disabled = false;
+  top_button_complete.disabled = false;
+  top_button_incomplete.disabled = false;
   loadCompletedMore.style = "display:block";
   loadCompletedMore.style = "display:none";
   if (data.length < 6) {
@@ -427,6 +453,9 @@ async function showIncompletedTasks() {
   currentCompletedIndex = 0;
   currentIndex = 0;
   bigspin.style = "display:block";
+  top_button_all.disabled = true;
+  top_button_complete.disabled = true;
+  top_button_incomplete.disabled = true;
   loadIncompletedMore.style = "display:none";
 
   document.getElementById("id01").classList.add("blur");
@@ -442,6 +471,9 @@ async function showIncompletedTasks() {
   });
   document.getElementById("id01").classList.remove("blur");
   bigspin.style = "display:none";
+  top_button_all.disabled = false;
+  top_button_complete.disabled = false;
+  top_button_incomplete.disabled = false;
   loadIncompletedMore.style = "display:block";
   if (data.length < 6) {
     loadIncompletedMore.style = "display:none";
