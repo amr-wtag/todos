@@ -267,6 +267,7 @@ taskInput.onkeyup = async function (e) {
 //open search field
 function searchToggle() {
   var x = document.getElementById("searchInput");
+  x.value = "";
   setTimeout(() => {
     x.focus();
   }, 0);
