@@ -78,7 +78,7 @@ body {
   display: flex;
   padding-right: 20px;
   height: 70px;
-  justify-content: right;
+  /* justify-content: right; */
 }
 .create {
   display: flex;
@@ -228,7 +228,8 @@ input {
 .headerClass {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: flex-start;
+  gap: 795px;
 }
 .topButton {
   display: flex;
@@ -237,7 +238,7 @@ input {
   flex-wrap: wrap;
   flex-direction: row;
   justify-content: space-around;
-  padding-right: 136px;
+  /* padding-right: 136px; */
 }
 #top_button_all,
 #top_button_complete,
