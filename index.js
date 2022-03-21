@@ -139,6 +139,8 @@ delete_add.addEventListener("click", async function (e) {
   taskInput.value = "";
   toggle();
 });
+
+var keycount = 0;
 // add value
 add_button.addEventListener("click", async function (e) {
   e.preventDefault();
@@ -150,7 +152,8 @@ add_button.addEventListener("click", async function (e) {
   addFlag = 1;
   if (taskInput.value.length === 0) {
     Toast.show("Task can not be empty", "error");
-  } else {
+  } else if (keycount === 0) {
+    ++keycount;
     var x = document.getElementById("show");
 
     spin.style = "display:block";
@@ -168,7 +171,6 @@ add_button.addEventListener("click", async function (e) {
       }
       taskInput.value = "";
       datacount++;
-      // if (datacount > 5) loadMore.style = "display:block";
       if (top_button_all.disabled === true) {
         top_button_all.disabled = false;
         top_button_complete.disabled = false;
@@ -187,6 +189,7 @@ add_button.addEventListener("click", async function (e) {
     } catch (e) {
       Toast.show(e, "error");
     }
+    keycount = 0;
   }
 });
 
@@ -205,7 +208,8 @@ function toggle() {
 // add task after enter
 taskInput.onkeyup = async function (e) {
   e.preventDefault();
-  if (e.key == "Enter") {
+  if (e.key == "Enter" && keycount === 0) {
+    ++keycount;
     taskInput.value = taskInput.value.trim("\n");
 
     taskInput.value = taskInput.value.trim("\n");
@@ -230,14 +234,13 @@ taskInput.onkeyup = async function (e) {
           .insert([
             { name: taskInput.value, created_at: new Date(Date.now()) },
           ]);
-
+        taskInput.value = "";
         if (x.style.display === "block") {
           x.style.display = "none";
         }
         taskInput.value = "";
         document.getElementById("createspin").style = "display:none";
         datacount++;
-        // if (datacount > 5) loadMore.style = "display:block";
         if (top_button_all.disabled === true) {
           top_button_all.disabled = false;
           top_button_complete.disabled = false;
@@ -257,6 +260,7 @@ taskInput.onkeyup = async function (e) {
         Toast.show(e, "error");
       }
     }
+    keycount = 0;
   }
 };
 
@@ -465,6 +469,10 @@ async function deleted(e) {
   datacount--;
   // if (datacount < 6) loadMore.style = "display:none";
   if (datacount < 1) {
+    loadMore.style = "display:none";
+    currentIndex = 0;
+    currentCompletedIndex = 0;
+    currentIncompletedIndex = 0;
     document.getElementById("emptyScreen").style = "display:block";
     top_button_all.disabled = true;
     top_button_complete.disabled = true;
@@ -624,6 +632,7 @@ function print(e) {
     e.preventDefault();
 
     if (e.key == "Enter") {
+      e.key.disabled = true;
       create.disabled = false;
       input.value = input.value.trim("\n");
       h6.style = "display:block";
@@ -650,6 +659,7 @@ function print(e) {
       h6.classList.remove("blur");
       button_div.classList.remove("blur");
       spin.style = "display:none";
+      e.key.disabled = false;
     }
   };
 
