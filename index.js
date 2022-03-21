@@ -364,6 +364,10 @@ async function showTasks() {
 
   bigspin.style = "display:none";
   loadMore.style = "display:block";
+  if (data.length < 5) {
+    loadMore.style = "display:none";
+    currentIndex = 0;
+  }
 }
 
 function loadmore() {
@@ -389,14 +393,20 @@ async function showCompletedTasks() {
     .from("todo")
     .select()
     .order("id", { ascending: false })
+    .not("completed_on", "is", null)
     .range(currentCompletedIndex, currentCompletedIndex + 5);
 
+  console.log(data);
   data.map((e) => {
-    if (e.completed_on !== null) print(e);
+    print(e);
   });
   bigspin.style = "display:none";
   loadCompletedMore.style = "display:block";
-
+  loadCompletedMore.style = "display:none";
+  if (data.length < 5) {
+    loadCompletedMore.style = "display:none";
+    currentCompletedIndex = 0;
+  }
   document.getElementById("id01").classList.remove("blur");
 }
 function loadcompletedmore() {
@@ -430,6 +440,10 @@ async function showIncompletedTasks() {
   document.getElementById("id01").classList.remove("blur");
   bigspin.style = "display:none";
   loadIncompletedMore.style = "display:block";
+  if (data.length < 5) {
+    loadIncompletedMore.style = "display:none";
+    currentIncompletedIndex = 0;
+  }
 }
 function loadincompletedmore() {
   currentIncompletedIndex += 6;
@@ -493,7 +507,7 @@ function print(e) {
   var actual_delete_button = document.createElement("img");
   var spin = document.createElement("img");
   var save = document.createElement("button");
-  var completed = document.createElement("rectangle");
+  var completed = document.createElement("label");
 
   save.appendChild(document.createTextNode("save"));
   save.type = "submit";

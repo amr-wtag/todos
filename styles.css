@@ -1,8 +1,4 @@
 body {
-  /* text-align: center; */
-
-  /*padding-right: 50; */
-  /* max-width: 1366px;*/
   margin: 0;
   background-color: #f8f9ff;
 }
@@ -17,11 +13,7 @@ body {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  /* align-items: stretch; */
   gap: 50px;
-  /* padding-left: 50px; */
-  /* justify-content: center; */
-  /* justify-content: space-around; */
 }
 .blur {
   filter: blur(2px);
@@ -33,6 +25,7 @@ body {
   overflow-x: hidden;
   flex-direction: row;
   background: white;
+  font-weight: 700;
   top: 15px;
   width: 351px;
   min-height: 56px;
@@ -50,7 +43,6 @@ body {
   display: flex;
   min-width: 100px;
   min-height: 50px;
-  /* justify-content: left; */
 }
 .button_div {
   display: flex;
@@ -109,7 +101,7 @@ body {
   border-radius: 5px;
   min-width: 117px;
   min-height: 36px;
-  padding: 6px;
+  /* padding: 6px; */
   font-size: 16px;
   top: 80%;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
@@ -118,17 +110,6 @@ body {
   cursor: pointer;
   text-align: center;
 }
-/* rectangle {
-  border: none;
-  border-radius: 5px;
-  min-width: 150px;
-  padding: 6px;
-  font-family: Roboto, sans-serif;
-  font-size: 14px;
-  color: white;
-  background-color: #32394b;
-  cursor: pointer;
-} */
 
 .divClass {
   display: flex;
@@ -142,7 +123,6 @@ body {
   min-width: 382px;
   min-height: auto;
   justify-content: space-between;
-  /* radius: 5px; */
 }
 input {
   min-width: 518px;
@@ -156,12 +136,6 @@ input {
   font-size: 24px;
 }
 .addTaskH1 {
-  /* position: absolute;
-  left: 0.08%;
-  right: 71%;
-  top: 0%;
-  bottom: 64.65%; */
-
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   font-style: normal;
@@ -175,23 +149,15 @@ input {
   position: fixed;
   left: 50%;
   top: 50%;
-  /* min-width: 100%;
-  min-height: 100%; */
   z-index: 9999;
-  /* mix-blend-mode: Pass through; */
 }
 .rotateDiv {
   display: flex;
   width: 50px;
   height: 47.36px;
   top: 23.68px;
-  /* position: relative; */
   left: 66.02px;
   text-align: middle;
-  /*top: 50%; */
-  /* min-width: 100%;
-  min-height: 100%; */
-  /* z-index: 9999; */
 }
 @keyframes spin {
   from {
@@ -216,29 +182,17 @@ input {
   animation: spin 2s infinite;
 }
 
-h6 {
-  min-width: 160px;
-  min-height: 16px;
-  top: 80px;
-  left: 16px;
-  font-size: 12px;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-  font-weight: 700, bold;
-  line-height: 16.41px;
-  padding-left: 10px;
-}
 .complete_date {
   display: flex;
   flex-wrap: wrap;
   align-content: space-around;
   justify-content: space-around;
   font-size: 15px;
+  font-weight: 400;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   justify-content: space-around;
   color: white;
-  /* margin-left: 205px; */
   min-width: 150px;
   min-height: 30px;
   left: 233px;
@@ -250,7 +204,6 @@ h6 {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
-  /* min-width: 100%; */
   margin: auto;
   min-height: 72px;
   background: #ffffff;
@@ -274,7 +227,6 @@ h6 {
 .headerClass {
   display: flex;
   flex-wrap: wrap;
-  /*  */
   justify-content: space-between;
 }
 .topButton {
@@ -294,6 +246,7 @@ h6 {
   background: #ffffff;
   border: 1px solid #dde2ff;
   border-radius: 5px;
+  font-weight: 700;
 }
 .createdAt_spin {
   display: flex;
@@ -319,7 +272,6 @@ textarea {
 }
 
 .toast {
-  /* position: fixed; */
   font-size: 18px;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
@@ -334,7 +286,6 @@ textarea {
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   visibility: hidden;
-  /* opacity: 0; */
   transition: opacity 0.2s, top 0.2s, visibility 0.2s;
 }
 .toast--visible {
@@ -355,9 +306,7 @@ textarea {
 .emptyScreen {
   display: flex;
   text-align: center;
-  /*  min-width: 26.63px;
-  min-height: 25.05px;
-  left: 42.74px; */
+
   top: 2000px;
 }
 #createspin {
@@ -366,7 +315,6 @@ textarea {
   height: 47.36px;
   top: 50%;
   left: 50%;
-  /* padding-left: 200px; */
 }
 .splash {
   position: fixed;
@@ -413,7 +361,7 @@ textarea {
   font-weight: 700;
   font-size: 14px;
   line-height: 16px;
-  margin: 4px;
+  margin: 7px;
   color: #bbbdd0;
 }
 .load_more {
