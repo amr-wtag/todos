@@ -290,7 +290,7 @@ function searchToggle() {
         const { data, error } = await supabase
           .from("todo")
           .select()
-          .like("name", `%${text}%`);
+          .ilike("name", `%${text}%`);
         var count = document.getElementById("id01").childElementCount;
         for (var i = 1; i < count; i++) {
           document
@@ -306,7 +306,7 @@ function searchToggle() {
         const { data, error } = await supabase
           .from("todo")
           .select()
-          .like("name", `%${text}%`)
+          .ilike("name", `%${text}%`)
           .is("completed_on", null);
         var count = document.getElementById("id01").childElementCount;
         for (var i = 1; i < count; i++) {
@@ -373,7 +373,7 @@ async function showTasks() {
     .select()
     .order("id", { ascending: false })
     .range(currentIndex, currentIndex + 5);
-  // datacount = data.length;
+
   data.map((e) => {
     print(e);
   });
@@ -499,7 +499,6 @@ async function deleted(e) {
     .delete()
     .match({ id: e.id });
   datacount--;
-  // if (datacount < 6) loadMore.style = "display:none";
   if (datacount < 1) {
     loadMore.style = "display:none";
     currentIndex = 0;
@@ -512,6 +511,7 @@ async function deleted(e) {
   }
 }
 
+//toggle
 function toggled(input, h2, edit_button, save) {
   if (input.style.display === "none") {
     input.style.display = "block";
@@ -623,9 +623,8 @@ function print(e) {
 
     deleted(input);
     Toast.show("Deleted task", "success");
-    document.getElementById("id01").removeChild(div);
-
     spin.style = "display:none";
+    document.getElementById("id01").removeChild(div);
   };
 
   save.onclick = async function (e) {
