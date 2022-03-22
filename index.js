@@ -26,6 +26,7 @@ var top_button_all = document.getElementById("top_button_all");
 var top_button_complete = document.getElementById("top_button_complete");
 var top_button_incomplete = document.getElementById("top_button_incomplete");
 var searchInput = document.querySelector("searchInput");
+var searchValue = document.getElementById("searchInput");
 var h2 = document.getElementById("id01");
 var loadMore = document.getElementById("loadMore");
 var loadCompletedMore = document.getElementById("loadCompletedMore");
@@ -83,31 +84,84 @@ async function checkEmpty() {
 checkEmpty();
 showTasks();
 
-// show all tasks
-top_button_all.addEventListener("click", async function (e) {
-  e.preventDefault();
-  flag = "all";
-  currentIndex = 0;
+//clear body
+function clearBody() {
   var count = document.getElementById("id01").childElementCount;
   for (var i = 1; i < count; i++) {
     document
       .getElementById("id01")
       .removeChild(document.getElementById("id01").children[1]);
   }
-  showTasks();
+}
+
+// show all tasks
+top_button_all.addEventListener("click", async function (e) {
+  e.preventDefault();
+  flag = "all";
+  currentIndex = 0;
+
+  // clearBody();
+  if (searchValue.style.display === "block") {
+    loadMore.style = "display:none";
+    loadIncompletedMore.style = "display:none";
+    loadCompletedMore.style = "display:none";
+    bigspin.style = "display:block";
+    top_button_all.disabled = true;
+    top_button_complete.disabled = true;
+    top_button_incomplete.disabled = true;
+    maindiv.classList.add("blur");
+    const { data, error } = await supabase
+      .from("todo")
+      .select()
+      .ilike("name", `%${searchValue.value}%`);
+    clearBody();
+    data.map((e) => {
+      print(e);
+    });
+    maindiv.classList.remove("blur");
+    top_button_all.disabled = false;
+    top_button_complete.disabled = false;
+    top_button_incomplete.disabled = false;
+    bigspin.style = "display:none";
+  } else {
+    clearBody();
+    showTasks();
+  }
 });
 
 // show completed tasks
 top_button_complete.addEventListener("click", async function (e) {
   e.preventDefault();
   flag = "complete";
-  var count = document.getElementById("id01").childElementCount;
-  for (var i = 1; i < count; i++) {
-    document
-      .getElementById("id01")
-      .removeChild(document.getElementById("id01").children[1]);
+  currentCompletedIndex = 0;
+  // clearBody();
+  if (searchValue.style.display === "block") {
+    loadMore.style = "display:none";
+    loadIncompletedMore.style = "display:none";
+    loadCompletedMore.style = "display:none";
+    bigspin.style = "display:block";
+    top_button_all.disabled = true;
+    top_button_complete.disabled = true;
+    top_button_incomplete.disabled = true;
+    maindiv.classList.add("blur");
+    const { data, error } = await supabase
+      .from("todo")
+      .select()
+      .ilike("name", `%${searchValue.value}%`)
+      .not("completed_on", "is", null);
+    clearBody();
+    data.map((e) => {
+      print(e);
+    });
+    maindiv.classList.remove("blur");
+    top_button_all.disabled = false;
+    top_button_complete.disabled = false;
+    top_button_incomplete.disabled = false;
+    bigspin.style = "display:none";
+  } else {
+    clearBody();
+    showCompletedTasks();
   }
-  showCompletedTasks();
 });
 
 //Incompleted tasks
@@ -116,13 +170,35 @@ top_button_incomplete.addEventListener("click", async function (e) {
   e.preventDefault();
   taskInput.style = "";
   flag = "incomplete";
-  var count = document.getElementById("id01").childElementCount;
-  for (var i = 1; i < count; i++) {
-    document
-      .getElementById("id01")
-      .removeChild(document.getElementById("id01").children[1]);
+  currentIncompletedIndex = 0;
+  // clearBody();
+  if (searchValue.style.display === "block") {
+    loadMore.style = "display:none";
+    loadIncompletedMore.style = "display:none";
+    loadCompletedMore.style = "display:none";
+    bigspin.style = "display:block";
+    top_button_all.disabled = true;
+    top_button_complete.disabled = true;
+    top_button_incomplete.disabled = true;
+    maindiv.classList.add("blur");
+    const { data, error } = await supabase
+      .from("todo")
+      .select()
+      .ilike("name", `%${searchValue.value}%`)
+      .is("completed_on", null);
+    clearBody();
+    data.map((e) => {
+      print(e);
+    });
+    maindiv.classList.remove("blur");
+    top_button_all.disabled = false;
+    top_button_complete.disabled = false;
+    top_button_incomplete.disabled = false;
+    bigspin.style = "display:none";
+  } else {
+    clearBody();
+    showIncompletedTasks();
   }
-  showIncompletedTasks();
 });
 
 taskform.addEventListener("submit", async function (e) {
@@ -266,42 +342,51 @@ taskInput.onkeyup = async function (e) {
 
 //open search field
 function searchToggle() {
-  var x = document.getElementById("searchInput");
-  x.value = "";
   setTimeout(() => {
-    x.focus();
+    searchValue.focus();
   }, 0);
-  if (x.style.display === "none") {
-    x.style.display = "block";
+  if (searchValue.style.display === "none") {
+    searchValue.style.display = "block";
   } else {
-    x.style.display = "none";
+    searchValue.style.display = "none";
+    searchValue.value = null;
+    clearBody();
+    if (flag == "all") showTasks();
+    else if (flag == "complete") showCompletedTasks();
+    else showIncompletedTasks();
   }
   //search Input
-  x.addEventListener("keyup", async (e) => {
+  searchValue.addEventListener("keyup", async (e) => {
     e.preventDefault();
     const text = e.currentTarget.value;
     var blur = document.getElementById("id01");
     if (text.length > 2) {
+      loadMore.style = "display:none";
+      loadIncompletedMore.style = "display:none";
+      loadCompletedMore.style = "display:none";
       bigspin.style = "display:block";
       top_button_all.disabled = true;
       top_button_complete.disabled = true;
       top_button_incomplete.disabled = true;
       blur.classList.add("blur");
-      if (flag == "all" || flag == "complete") {
+      if (flag == "all") {
         const { data, error } = await supabase
           .from("todo")
           .select()
           .ilike("name", `%${text}%`);
-        var count = document.getElementById("id01").childElementCount;
-        for (var i = 1; i < count; i++) {
-          document
-            .getElementById("id01")
-            .removeChild(document.getElementById("id01").children[1]);
-        }
+        clearBody();
         data.map((e) => {
-          if (flag == "complete") {
-            if (e.completed_on !== null) print(e);
-          } else print(e);
+          print(e);
+        });
+      } else if (flag == "complete") {
+        const { data, error } = await supabase
+          .from("todo")
+          .select()
+          .ilike("name", `%${text}%`)
+          .not("completed_on", "is", null);
+        clearBody();
+        data.map((e) => {
+          print(e);
         });
       } else {
         const { data, error } = await supabase
@@ -309,12 +394,7 @@ function searchToggle() {
           .select()
           .ilike("name", `%${text}%`)
           .is("completed_on", null);
-        var count = document.getElementById("id01").childElementCount;
-        for (var i = 1; i < count; i++) {
-          document
-            .getElementById("id01")
-            .removeChild(document.getElementById("id01").children[1]);
-        }
+        clearBody();
         data.map((e) => {
           print(e);
         });
@@ -325,17 +405,12 @@ function searchToggle() {
       top_button_complete.disabled = false;
       top_button_incomplete.disabled = false;
     } else if (text.length === 0) {
-      var count = document.getElementById("id01").childElementCount;
       bigspin.style = "display:block";
       top_button_all.disabled = true;
       top_button_complete.disabled = true;
       top_button_incomplete.disabled = true;
       blur.classList.add("blur");
-      for (var i = 1; i < count; i++) {
-        document
-          .getElementById("id01")
-          .removeChild(document.getElementById("id01").children[1]);
-      }
+      clearBody();
 
       blur.classList.remove("blur");
       bigspin.style = "display:none";
@@ -355,9 +430,6 @@ async function showTasks() {
   var x = document.getElementById("show");
   if (x.style.display === "block") {
     x.style.display = "none";
-  }
-  if (document.getElementById("searchInput").style.display === "block") {
-    document.getElementById("searchInput").style.display = "none";
   }
   loadIncompletedMore.style = "display:none";
   loadCompletedMore.style = "display:none";
@@ -409,9 +481,6 @@ async function showCompletedTasks() {
   if (x.style.display === "block") {
     x.style.display = "none";
   }
-  if (document.getElementById("searchInput").style.display === "block") {
-    document.getElementById("searchInput").style.display = "none";
-  }
   loadMore.style = "display:none";
   loadIncompletedMore.style = "display:none";
   currentIncompletedIndex = 0;
@@ -454,9 +523,6 @@ async function showIncompletedTasks() {
   var x = document.getElementById("show");
   if (x.style.display === "block") {
     x.style.display = "none";
-  }
-  if (document.getElementById("searchInput").style.display === "block") {
-    document.getElementById("searchInput").style.display = "none";
   }
   loadMore.style = "display:none";
   loadCompletedMore.style = "display:none";
