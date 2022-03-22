@@ -356,6 +356,9 @@ async function showTasks() {
   if (x.style.display === "block") {
     x.style.display = "none";
   }
+  if (document.getElementById("searchInput").style.display === "block") {
+    document.getElementById("searchInput").style.display = "none";
+  }
   loadIncompletedMore.style = "display:none";
   loadCompletedMore.style = "display:none";
   currentCompletedIndex = 0;
@@ -406,6 +409,9 @@ async function showCompletedTasks() {
   if (x.style.display === "block") {
     x.style.display = "none";
   }
+  if (document.getElementById("searchInput").style.display === "block") {
+    document.getElementById("searchInput").style.display = "none";
+  }
   loadMore.style = "display:none";
   loadIncompletedMore.style = "display:none";
   currentIncompletedIndex = 0;
@@ -448,6 +454,9 @@ async function showIncompletedTasks() {
   var x = document.getElementById("show");
   if (x.style.display === "block") {
     x.style.display = "none";
+  }
+  if (document.getElementById("searchInput").style.display === "block") {
+    document.getElementById("searchInput").style.display = "none";
   }
   loadMore.style = "display:none";
   loadCompletedMore.style = "display:none";
