@@ -86,11 +86,9 @@ showTasks();
 
 //clear body
 function clearBody() {
-  var count = document.getElementById("id01").childElementCount;
+  var count = maindiv.childElementCount;
   for (var i = 1; i < count; i++) {
-    document
-      .getElementById("id01")
-      .removeChild(document.getElementById("id01").children[1]);
+    maindiv.removeChild(maindiv.children[1]);
   }
 }
 
@@ -101,7 +99,7 @@ top_button_all.addEventListener("click", async function (e) {
   currentIndex = 0;
 
   // clearBody();
-  if (searchValue.style.display === "block") {
+  if (searchValue.style.display == "block") {
     loadMore.style = "display:none";
     loadIncompletedMore.style = "display:none";
     loadCompletedMore.style = "display:none";
@@ -110,11 +108,12 @@ top_button_all.addEventListener("click", async function (e) {
     top_button_complete.disabled = true;
     top_button_incomplete.disabled = true;
     maindiv.classList.add("blur");
+    clearBody();
     const { data, error } = await supabase
       .from("todo")
       .select()
       .ilike("name", `%${searchValue.value}%`);
-    clearBody();
+
     data.map((e) => {
       print(e);
     });
@@ -123,7 +122,7 @@ top_button_all.addEventListener("click", async function (e) {
     top_button_complete.disabled = false;
     top_button_incomplete.disabled = false;
     bigspin.style = "display:none";
-  } else {
+  } else if (searchValue.style.display == "none") {
     clearBody();
     showTasks();
   }
@@ -135,7 +134,7 @@ top_button_complete.addEventListener("click", async function (e) {
   flag = "complete";
   currentCompletedIndex = 0;
   // clearBody();
-  if (searchValue.style.display === "block") {
+  if (searchValue.style.display == "block") {
     loadMore.style = "display:none";
     loadIncompletedMore.style = "display:none";
     loadCompletedMore.style = "display:none";
@@ -144,12 +143,13 @@ top_button_complete.addEventListener("click", async function (e) {
     top_button_complete.disabled = true;
     top_button_incomplete.disabled = true;
     maindiv.classList.add("blur");
+    clearBody();
     const { data, error } = await supabase
       .from("todo")
       .select()
       .ilike("name", `%${searchValue.value}%`)
       .not("completed_on", "is", null);
-    clearBody();
+
     data.map((e) => {
       print(e);
     });
@@ -158,7 +158,7 @@ top_button_complete.addEventListener("click", async function (e) {
     top_button_complete.disabled = false;
     top_button_incomplete.disabled = false;
     bigspin.style = "display:none";
-  } else {
+  } else if (searchValue.style.display == "none") {
     clearBody();
     showCompletedTasks();
   }
@@ -172,7 +172,7 @@ top_button_incomplete.addEventListener("click", async function (e) {
   flag = "incomplete";
   currentIncompletedIndex = 0;
   // clearBody();
-  if (searchValue.style.display === "block") {
+  if (searchValue.style.display == "block") {
     loadMore.style = "display:none";
     loadIncompletedMore.style = "display:none";
     loadCompletedMore.style = "display:none";
@@ -181,12 +181,13 @@ top_button_incomplete.addEventListener("click", async function (e) {
     top_button_complete.disabled = true;
     top_button_incomplete.disabled = true;
     maindiv.classList.add("blur");
+    clearBody();
     const { data, error } = await supabase
       .from("todo")
       .select()
       .ilike("name", `%${searchValue.value}%`)
       .is("completed_on", null);
-    clearBody();
+
     data.map((e) => {
       print(e);
     });
@@ -195,7 +196,7 @@ top_button_incomplete.addEventListener("click", async function (e) {
     top_button_complete.disabled = false;
     top_button_incomplete.disabled = false;
     bigspin.style = "display:none";
-  } else {
+  } else if (searchValue.style.display == "none") {
     clearBody();
     showIncompletedTasks();
   }
@@ -355,75 +356,98 @@ function searchToggle() {
     else if (flag == "complete") showCompletedTasks();
     else showIncompletedTasks();
   }
-  //search Input
-  searchValue.addEventListener("keyup", async (e) => {
-    e.preventDefault();
-    const text = e.currentTarget.value;
-    var blur = document.getElementById("id01");
-    if (text.length > 2) {
-      loadMore.style = "display:none";
-      loadIncompletedMore.style = "display:none";
-      loadCompletedMore.style = "display:none";
-      bigspin.style = "display:block";
-      top_button_all.disabled = true;
-      top_button_complete.disabled = true;
-      top_button_incomplete.disabled = true;
-      blur.classList.add("blur");
-      if (flag == "all") {
-        const { data, error } = await supabase
-          .from("todo")
-          .select()
-          .ilike("name", `%${text}%`);
-        clearBody();
-        data.map((e) => {
-          print(e);
-        });
-      } else if (flag == "complete") {
-        const { data, error } = await supabase
-          .from("todo")
-          .select()
-          .ilike("name", `%${text}%`)
-          .not("completed_on", "is", null);
-        clearBody();
-        data.map((e) => {
-          print(e);
-        });
-      } else {
-        const { data, error } = await supabase
-          .from("todo")
-          .select()
-          .ilike("name", `%${text}%`)
-          .is("completed_on", null);
-        clearBody();
-        data.map((e) => {
-          print(e);
-        });
-      }
-
-      bigspin.style = "display:none";
-      top_button_all.disabled = false;
-      top_button_complete.disabled = false;
-      top_button_incomplete.disabled = false;
-    } else if (text.length === 0) {
-      bigspin.style = "display:block";
-      top_button_all.disabled = true;
-      top_button_complete.disabled = true;
-      top_button_incomplete.disabled = true;
-      blur.classList.add("blur");
-      clearBody();
-
-      blur.classList.remove("blur");
-      bigspin.style = "display:none";
-      top_button_all.disabled = false;
-      top_button_complete.disabled = false;
-      top_button_incomplete.disabled = false;
-      if (flag == "all") showTasks();
-      else if (flag == "complete") showCompletedTasks();
-      else showIncompletedTasks();
-    }
-    blur.classList.remove("blur");
-  });
 }
+
+//debounce
+const debounce = (fn, delay) => {
+  let timer;
+  return (...args) => {
+    const context = this;
+    const later = () => {
+      timer = null;
+      fn.call(this, ...args);
+    };
+    clearTimeout(timer);
+    timer = setTimeout(later, delay);
+  };
+};
+
+//search Input
+const initApp = () => {
+  searchValue.addEventListener("keyup", debounce(keyupLog, 1000));
+};
+document.addEventListener("DOMContentLoaded", initApp);
+//keyup log
+const keyupLog = async (e) => {
+  e.preventDefault();
+  const text = searchValue.value;
+  var blur = document.getElementById("id01");
+  if (text.length > 2) {
+    loadMore.style = "display:none";
+    loadIncompletedMore.style = "display:none";
+    loadCompletedMore.style = "display:none";
+    bigspin.style = "display:block";
+    top_button_all.disabled = true;
+    top_button_complete.disabled = true;
+    top_button_incomplete.disabled = true;
+    blur.classList.add("blur");
+    if (flag == "all") {
+      clearBody();
+      const { data, error } = await supabase
+        .from("todo")
+        .select()
+        .ilike("name", `%${text}%`);
+
+      data.map((e) => {
+        print(e);
+      });
+    } else if (flag == "complete") {
+      clearBody();
+      const { data, error } = await supabase
+        .from("todo")
+        .select()
+        .ilike("name", `%${text}%`)
+        .not("completed_on", "is", null);
+
+      data.map((e) => {
+        print(e);
+      });
+    } else {
+      clearBody();
+      const { data, error } = await supabase
+        .from("todo")
+        .select()
+        .ilike("name", `%${text}%`)
+        .is("completed_on", null);
+
+      data.map((e) => {
+        print(e);
+      });
+    }
+
+    bigspin.style = "display:none";
+    top_button_all.disabled = false;
+    top_button_complete.disabled = false;
+    top_button_incomplete.disabled = false;
+  } else if (text.length === 0) {
+    bigspin.style = "display:block";
+    top_button_all.disabled = true;
+    top_button_complete.disabled = true;
+    top_button_incomplete.disabled = true;
+    blur.classList.add("blur");
+
+    blur.classList.remove("blur");
+    bigspin.style = "display:none";
+    top_button_all.disabled = false;
+    top_button_complete.disabled = false;
+    top_button_incomplete.disabled = false;
+    clearBody();
+    if (flag == "all") showTasks();
+    else if (flag == "complete") showCompletedTasks();
+    else showIncompletedTasks();
+  }
+  blur.classList.remove("blur");
+};
 // show tasks
 
 async function showTasks() {
