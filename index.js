@@ -27,7 +27,7 @@ var top_button_complete = document.getElementById("top_button_complete");
 var top_button_incomplete = document.getElementById("top_button_incomplete");
 var searchInput = document.querySelector("searchInput");
 var searchValue = document.getElementById("searchInput");
-var h2 = document.getElementById("id01");
+// var h2 = document.getElementById("id01");
 var loadMore = document.getElementById("loadMore");
 var loadCompletedMore = document.getElementById("loadCompletedMore");
 var loadIncompletedMore = document.getElementById("loadIncompletedMore");
@@ -385,7 +385,7 @@ document.addEventListener("DOMContentLoaded", initApp);
 const keyupLog = async (e) => {
   e.preventDefault();
   const text = searchValue.value;
-  var blur = document.getElementById("id01");
+  var blur = maindiv;
   if (text.length > 2) {
     loadMore.style = "display:none";
     loadIncompletedMore.style = "display:none";
@@ -396,33 +396,31 @@ const keyupLog = async (e) => {
     top_button_incomplete.disabled = true;
     blur.classList.add("blur");
     if (flag == "all") {
-      clearBody();
       const { data, error } = await supabase
         .from("todo")
         .select()
         .ilike("name", `%${text}%`);
-
+      clearBody();
       data.map((e) => {
         print(e);
       });
     } else if (flag == "complete") {
-      clearBody();
       const { data, error } = await supabase
         .from("todo")
         .select()
         .ilike("name", `%${text}%`)
         .not("completed_on", "is", null);
-
+      clearBody();
       data.map((e) => {
         print(e);
       });
     } else {
-      clearBody();
       const { data, error } = await supabase
         .from("todo")
         .select()
         .ilike("name", `%${text}%`)
         .is("completed_on", null);
+      clearBody();
 
       data.map((e) => {
         print(e);
@@ -469,7 +467,7 @@ async function showTasks() {
     top_button_complete.disabled = true;
     top_button_incomplete.disabled = true;
   }
-  document.getElementById("id01").classList.add("blur");
+  maindiv.classList.add("blur");
 
   loadMore.style = "display:none";
   const { data, error } = await supabase
@@ -485,7 +483,7 @@ async function showTasks() {
     splash.classList.add("display-none");
     splash.style = "display:none";
   }
-  document.getElementById("id01").classList.remove("blur");
+  maindiv.classList.remove("blur");
 
   bigspin.style = "display:none";
   top_button_all.disabled = false;
@@ -519,7 +517,7 @@ async function showCompletedTasks() {
   top_button_incomplete.disabled = true;
   loadCompletedMore.style = "display:none";
 
-  document.getElementById("id01").classList.add("blur");
+  maindiv.classList.add("blur");
   const { data, error } = await supabase
     .from("todo")
     .select()
@@ -540,7 +538,7 @@ async function showCompletedTasks() {
     loadCompletedMore.style = "display:none";
     currentCompletedIndex = 0;
   }
-  document.getElementById("id01").classList.remove("blur");
+  maindiv.classList.remove("blur");
 }
 function loadcompletedmore() {
   currentCompletedIndex += 6;
@@ -562,7 +560,7 @@ async function showIncompletedTasks() {
   top_button_incomplete.disabled = true;
   loadIncompletedMore.style = "display:none";
 
-  document.getElementById("id01").classList.add("blur");
+  maindiv.classList.add("blur");
   const { data, error } = await supabase
     .from("todo")
     .select()
@@ -573,7 +571,7 @@ async function showIncompletedTasks() {
   data.map((e) => {
     print(e);
   });
-  document.getElementById("id01").classList.remove("blur");
+  maindiv.classList.remove("blur");
   bigspin.style = "display:none";
   top_button_all.disabled = false;
   top_button_complete.disabled = false;
@@ -712,8 +710,7 @@ function print(e) {
           document.createTextNode(`Completed in ${days} days`),
         );
         button_complete.appendChild(completed);
-      } else if (flag === "incomplete")
-        document.getElementById("id01").removeChild(div);
+      } else if (flag === "incomplete") maindiv.removeChild(div);
       Toast.show("Task Completed", "success");
     } catch (e) {
       Toast.show(e, "error");
@@ -728,7 +725,7 @@ function print(e) {
     deleted(input);
     Toast.show("Deleted task", "success");
     spin.style = "display:none";
-    document.getElementById("id01").removeChild(div);
+    maindiv.removeChild(div);
   };
 
   save.onclick = async function (e) {
@@ -845,9 +842,9 @@ function print(e) {
   div.appendChild(button_complete);
 
   if (addFlag === 1) {
-    document.getElementById("id01").prepend(div);
+    maindiv.prepend(div);
 
-    document.getElementById("id01").prepend(document.getElementById("show"));
+    maindiv.prepend(document.getElementById("show"));
     addFlag = 0;
-  } else document.getElementById("id01").appendChild(div);
+  } else maindiv.appendChild(div);
 }
