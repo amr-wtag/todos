@@ -108,12 +108,12 @@ top_button_all.addEventListener("click", async function (e) {
     top_button_complete.disabled = true;
     top_button_incomplete.disabled = true;
     maindiv.classList.add("blur");
-    clearBody();
+
     const { data, error } = await supabase
       .from("todo")
       .select()
       .ilike("name", `%${searchValue.value}%`);
-
+    clearBody();
     data.map((e) => {
       print(e);
     });
@@ -143,13 +143,13 @@ top_button_complete.addEventListener("click", async function (e) {
     top_button_complete.disabled = true;
     top_button_incomplete.disabled = true;
     maindiv.classList.add("blur");
-    clearBody();
+
     const { data, error } = await supabase
       .from("todo")
       .select()
       .ilike("name", `%${searchValue.value}%`)
       .not("completed_on", "is", null);
-
+    clearBody();
     data.map((e) => {
       print(e);
     });
@@ -181,13 +181,13 @@ top_button_incomplete.addEventListener("click", async function (e) {
     top_button_complete.disabled = true;
     top_button_incomplete.disabled = true;
     maindiv.classList.add("blur");
-    clearBody();
+
     const { data, error } = await supabase
       .from("todo")
       .select()
       .ilike("name", `%${searchValue.value}%`)
       .is("completed_on", null);
-
+    clearBody();
     data.map((e) => {
       print(e);
     });
