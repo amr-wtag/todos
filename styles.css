@@ -47,7 +47,7 @@ body {
 }
 .button_div {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   width: 100px;
   height: 36px;
   left: 2px;
