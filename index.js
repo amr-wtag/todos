@@ -231,6 +231,7 @@ add_button.addEventListener("click", async function (e) {
   if (taskInput.value.length === 0) {
     Toast.show("Task can not be empty", "error");
   } else if (keycount === 0) {
+    taskInput.disabled = true;
     ++keycount;
     var x = document.getElementById("show");
 
@@ -268,6 +269,7 @@ add_button.addEventListener("click", async function (e) {
       Toast.show(e, "error");
     }
     keycount = 0;
+    taskInput.disabled = false;
   }
 });
 
@@ -288,6 +290,7 @@ taskInput.onkeyup = async function (e) {
   e.preventDefault();
   if (e.key == "Enter" && keycount === 0) {
     ++keycount;
+    taskInput.disabled = true;
     taskInput.value = taskInput.value.split("\n")[0];
     taskInput.value = taskInput.value.trim("\n");
     var spin = document.createElement("img");
@@ -338,6 +341,7 @@ taskInput.onkeyup = async function (e) {
       }
     }
     keycount = 0;
+    taskInput.disabled = false;
   }
 };
 
@@ -741,6 +745,7 @@ function print(e) {
     h2.classList.add("blur");
     h6.classList.add("blur");
     button_div.classList.add("blur");
+    input.disabled = true;
     input.value = input.value.split("\n")[0];
     try {
       const { data, error } = await supabase
@@ -757,6 +762,7 @@ function print(e) {
     h6.classList.remove("blur");
     button_div.classList.remove("blur");
     spin.style = "display:none";
+    input.disabled = false;
   };
 
   // enter press
@@ -764,6 +770,7 @@ function print(e) {
     e.preventDefault();
 
     if (e.key == "Enter") {
+      input.disabled = true;
       e.key.disabled = true;
       create.disabled = false;
       input.value = input.value.trim("\n");
@@ -793,6 +800,7 @@ function print(e) {
       button_div.classList.remove("blur");
       spin.style = "display:none";
       e.key.disabled = false;
+      input.disabled = false;
     }
   };
 
