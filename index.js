@@ -652,6 +652,7 @@ function print(e) {
 
   save.appendChild(document.createTextNode("save"));
   save.type = "submit";
+  save.classList = "save";
   completed.classList = "complete_date";
   actual_complete_button.src = "./images/tick.svg";
   actual_complete_button.alt = "tick";

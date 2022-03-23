@@ -49,7 +49,7 @@ body {
   display: flex;
   justify-content: space-between;
   width: 100px;
-  height: 24px;
+  height: 36px;
   left: 2px;
   top: 2px;
   flex-direction: column;
@@ -122,7 +122,7 @@ body {
   border-radius: 5px;
   size: 24px;
   min-width: 382px;
-  min-height: auto;
+  min-height: 200px;
   justify-content: space-between;
 }
 input {
@@ -254,6 +254,7 @@ input {
 .createdAt_spin {
   display: flex;
   align-items: center;
+  height: 47.36px;
 }
 .boxed_button {
   border: none;
@@ -262,8 +263,8 @@ input {
 textarea {
   size: 24px;
   min-width: 370px;
-  min-height: 100px;
-  font-size: 16pt;
+  min-height: 56px;
+  font-size: 24px;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   background: #ffffff;
@@ -292,6 +293,7 @@ textarea {
   transition: opacity 0.2s, top 0.2s, visibility 0.2s;
 }
 .toast--visible {
+  position: absolute;
   top: 70px;
   opacity: 1;
   visibility: visible;
@@ -357,6 +359,8 @@ textarea {
 .add_del {
   display: flex;
   flex-wrap: wrap;
+  margin-left: 8px;
+  margin-top: 15px;
 }
 .h6_class {
   min-width: 131px;
@@ -375,4 +379,26 @@ textarea {
   flex-wrap: wrap;
   justify-content: center;
   margin-top: 20px;
+}
+.save {
+  width: 63px;
+  height: 36px;
+  border-radius: 5px;
+  background: #ffffff;
+}
+.divClassShow {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  background: #ffffff;
+  border: 1px solid #dde2ff;
+  box-sizing: border-box;
+  border-radius: 5px;
+  size: 24px;
+  min-width: 382px;
+  min-height: 200px;
+  justify-content: space-between;
+}
+.showSpin {
+  height: 47.36px;
 }
