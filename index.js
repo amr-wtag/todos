@@ -533,7 +533,6 @@ async function showCompletedTasks() {
   topButtonComplete.disabled = false;
   topButtonIncomplete.disabled = false;
   loadCompletedMore.style = "display:block";
-  loadCompletedMore.style = "display:none";
   if (data.length < 6) {
     loadCompletedMore.style = "display:none";
     currentCompletedIndex = 0;
