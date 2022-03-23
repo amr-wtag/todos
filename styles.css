@@ -9,6 +9,7 @@ body {
   padding-left: 300px;
   padding-right: 200px;
   margin-bottom: 150px;
+  max-width: 1405px;
 }
 .container {
   display: flex;
@@ -45,7 +46,7 @@ body {
   min-width: 100px;
   min-height: 50px;
 }
-.button_div {
+.buttonDiv {
   display: flex;
   justify-content: center;
   width: 100px;
@@ -58,18 +59,18 @@ body {
   gap: 6px;
 }
 
-.add_button {
+.addButton {
   min-width: 91px;
   min-height: 36px;
   border-radius: 5px;
   background: #ffffff;
 }
 
-.add_task {
+.addTask {
   min-width: auto;
 }
-.top_button {
-  background: white;
+.topButton {
+  /* background: white; */
   min-width: 100px;
   min-height: 50px;
   justify-content: right;
@@ -184,7 +185,7 @@ input {
   animation: spin 2s infinite;
 }
 
-.complete_date {
+.completeDate {
   display: flex;
   flex-wrap: wrap;
   align-content: space-around;
@@ -206,8 +207,9 @@ input {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
-  margin: auto;
+
   min-height: 72px;
+  width: 1248px;
   background: #ffffff;
   border: 1px solid #dde2ff;
   justify-content: space-between;
@@ -220,7 +222,7 @@ input {
   flex-wrap: wrap;
   justify-content: flex-end;
 }
-.button_complete {
+.buttonComplete {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -229,8 +231,8 @@ input {
 .headerClass {
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-start;
-  gap: 795px;
+  justify-content: space-between;
+  /* gap: 795px; */
 }
 .topButton {
   display: flex;
@@ -239,11 +241,12 @@ input {
   flex-wrap: wrap;
   flex-direction: row;
   justify-content: space-around;
+  margin-right: 135px;
   /* padding-right: 136px; */
 }
-#top_button_all,
-#top_button_complete,
-#top_button_incomplete {
+#topButtonAll,
+#topButtonComplete,
+#topButtonIncomplete {
   width: 104px;
   height: 36px;
   background: #ffffff;
@@ -251,12 +254,12 @@ input {
   border-radius: 5px;
   font-weight: 700;
 }
-.createdAt_spin {
+.createdAtSpin {
   display: flex;
   align-items: center;
   height: 47.36px;
 }
-.boxed_button {
+.boxedButton {
   border: none;
   background: none;
 }
@@ -356,13 +359,13 @@ textarea {
   opacity: 0;
   animation: fadeIn 1s ease-in forwards;
 }
-.add_del {
+.addDel {
   display: flex;
   flex-wrap: wrap;
   margin-left: 8px;
   margin-top: 15px;
 }
-.h6_class {
+.h6Class {
   min-width: 131px;
   min-height: 16px;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
@@ -374,7 +377,7 @@ textarea {
   margin: 7px;
   color: #bbbdd0;
 }
-.load_more {
+.loadMore {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
