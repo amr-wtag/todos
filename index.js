@@ -233,7 +233,7 @@ add_button.addEventListener("click", async function (e) {
   } else if (keycount === 0) {
     taskInput.disabled = true;
     ++keycount;
-    var x = document.getElementById("show");
+    var addTodoField = document.getElementById("show");
 
     spin.style = "display:block";
     document.getElementById("createspin").style = "display:block";
@@ -245,8 +245,8 @@ add_button.addEventListener("click", async function (e) {
         .from("todo")
         .insert([{ name: taskInput.value, created_at: new Date(Date.now()) }]);
 
-      if (x.style.display === "block") {
-        x.style.display = "none";
+      if (addTodoField.style.display === "block") {
+        addTodoField.style.display = "none";
       }
       taskInput.value = "";
       datacount++;
@@ -277,11 +277,11 @@ function toggle() {
   setTimeout(() => {
     taskInput.focus();
   }, 0);
-  var x = document.getElementById("show");
-  if (x.style.display === "none") {
-    x.style.display = "block";
+  var addTodoField = document.getElementById("show");
+  if (addTodoField.style.display === "none") {
+    addTodoField.style.display = "block";
   } else {
-    x.style.display = "none";
+    addTodoField.style.display = "none";
   }
 }
 
@@ -301,7 +301,7 @@ taskInput.onkeyup = async function (e) {
     if (taskInput.value.length === 0) {
       Toast.show("Task can not be empty", "error");
     } else {
-      var x = document.getElementById("show");
+      var addTodoField = document.getElementById("show");
 
       spin.style = "display:block";
       document.getElementById("createspin").style = "display:block";
@@ -315,8 +315,8 @@ taskInput.onkeyup = async function (e) {
             { name: taskInput.value, created_at: new Date(Date.now()) },
           ]);
         taskInput.value = "";
-        if (x.style.display === "block") {
-          x.style.display = "none";
+        if (addTodoField.style.display === "block") {
+          addTodoField.style.display = "none";
         }
         taskInput.value = "";
         document.getElementById("createspin").style = "display:none";
@@ -455,9 +455,9 @@ const keyupLog = async (e) => {
 // show tasks
 
 async function showTasks() {
-  var x = document.getElementById("show");
-  if (x.style.display === "block") {
-    x.style.display = "none";
+  var addTodoField = document.getElementById("show");
+  if (addTodoField.style.display === "block") {
+    addTodoField.style.display = "none";
   }
   loadIncompletedMore.style = "display:none";
   loadCompletedMore.style = "display:none";
@@ -505,9 +505,9 @@ function loadmore() {
 
 // show completed tasks
 async function showCompletedTasks() {
-  var x = document.getElementById("show");
-  if (x.style.display === "block") {
-    x.style.display = "none";
+  var addTodoField = document.getElementById("show");
+  if (addTodoField.style.display === "block") {
+    addTodoField.style.display = "none";
   }
   loadMore.style = "display:none";
   loadIncompletedMore.style = "display:none";
@@ -548,9 +548,9 @@ function loadcompletedmore() {
 }
 // show Incompleted tasks
 async function showIncompletedTasks() {
-  var x = document.getElementById("show");
-  if (x.style.display === "block") {
-    x.style.display = "none";
+  var addTodoField = document.getElementById("show");
+  if (addTodoField.style.display === "block") {
+    addTodoField.style.display = "none";
   }
   loadMore.style = "display:none";
   loadCompletedMore.style = "display:none";
