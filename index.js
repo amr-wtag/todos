@@ -221,6 +221,7 @@ var keycount = 0;
 // add value
 add_button.addEventListener("click", async function (e) {
   e.preventDefault();
+  taskInput.value = taskInput.value.split("\n")[0];
   taskInput.value = taskInput.value.trim("\n");
   var spin = document.createElement("img");
   spin.src = "./images/bigspin.svg";
@@ -287,8 +288,7 @@ taskInput.onkeyup = async function (e) {
   e.preventDefault();
   if (e.key == "Enter" && keycount === 0) {
     ++keycount;
-    taskInput.value = taskInput.value.trim("\n");
-
+    taskInput.value = taskInput.value.split("\n")[0];
     taskInput.value = taskInput.value.trim("\n");
     var spin = document.createElement("img");
     spin.src = "./images/bigspin.svg";
@@ -374,7 +374,7 @@ const debounce = (fn, delay) => {
 
 //search Input
 const initApp = () => {
-  searchValue.addEventListener("keyup", debounce(keyupLog, 1000));
+  searchValue.addEventListener("keyup", debounce(keyupLog, 500));
 };
 document.addEventListener("DOMContentLoaded", initApp);
 //keyup log
@@ -741,6 +741,7 @@ function print(e) {
     h2.classList.add("blur");
     h6.classList.add("blur");
     button_div.classList.add("blur");
+    input.value = input.value.split("\n")[0];
     try {
       const { data, error } = await supabase
         .from("todo")
@@ -775,6 +776,7 @@ function print(e) {
       h2.classList.add("blur");
       h6.classList.add("blur");
       button_div.classList.add("blur");
+      input.value = input.value.split("\n")[0];
       try {
         const { data, error } = await supabase
           .from("todo")

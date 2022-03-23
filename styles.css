@@ -154,6 +154,7 @@ input {
 }
 .rotateDiv {
   display: flex;
+  /* position: absolute; */
   width: 50px;
   height: 47.36px;
   top: 23.68px;
@@ -319,7 +320,10 @@ textarea {
   left: 50%;
 }
 .splash {
-  position: fixed;
+  position: absolute;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   min-width: 100%;
   min-height: 100vh;
   top: 0;

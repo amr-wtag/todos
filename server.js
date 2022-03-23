@@ -1,4 +1,6 @@
 // Initialize the JS client
 
 // Make a request
-export function server() {}
+export default function show() {
+  console.log("splitted file");
+}
