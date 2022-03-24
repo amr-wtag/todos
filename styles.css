@@ -149,7 +149,7 @@ input {
 }
 .rotateFull {
   position: fixed;
-  left: 50%;
+  left: 45%;
   top: 50%;
   z-index: 9999;
 }
@@ -326,20 +326,21 @@ textarea {
 }
 .splash {
   position: absolute;
+  text-align: center;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   min-width: 100%;
-  min-height: 100vh;
-  top: 0;
-  left: 0;
-  z-index: 200;
-  background: #e5e5e5;
-  text-align: center;
+  min-height: 100%;
+  top: 0%;
+  left: 0%;
+  z-index: 9999;
+  background: #f8f9ff;
+
   line-height: 90vh;
 }
 .splash.display-none {
-  position: fixed;
+  position: absolute;
   opacity: 0;
   min-width: 100%;
   min-height: 100vh;
@@ -380,7 +381,8 @@ textarea {
 .loadMore {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  /* justify-content: center; */
+  margin-left: 41%;
   margin-top: 20px;
 }
 .save {
