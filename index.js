@@ -721,10 +721,15 @@ function print(e) {
   deleteButton.onclick = async function (e) {
     e.preventDefault();
     spin.style = "display:block";
-
-    deleted(input);
+    h2.classList.add("blur");
+    h6.classList.add("blur");
+    buttonDiv.classList.add("blur");
+    await deleted(input);
     Toast.show("Deleted task", "success");
     spin.style = "display:none";
+    h2.classList.remove("blur");
+    h6.classList.remove("blur");
+    buttonDiv.classList.remove("blur");
     maindiv.removeChild(div);
   };
 
