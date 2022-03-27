@@ -27,7 +27,6 @@ var topButtonComplete = document.getElementById("topButtonComplete");
 var topButtonIncomplete = document.getElementById("topButtonIncomplete");
 var searchInput = document.querySelector("searchInput");
 var searchValue = document.getElementById("searchInput");
-// var h2 = document.getElementById("id01");
 var loadMore = document.getElementById("loadMore");
 var loadCompletedMore = document.getElementById("loadCompletedMore");
 var loadIncompletedMore = document.getElementById("loadIncompletedMore");
@@ -97,8 +96,6 @@ topButtonAll.addEventListener("click", async function (e) {
   e.preventDefault();
   flag = "all";
   currentIndex = 0;
-
-  // clearBody();
   if (searchValue.style.display == "block") {
     loadMore.style = "display:none";
     loadIncompletedMore.style = "display:none";
@@ -123,7 +120,6 @@ topButtonAll.addEventListener("click", async function (e) {
     topButtonIncomplete.disabled = false;
     bigspin.style = "display:none";
   } else if (searchValue.style.display == "none") {
-    // clearBody();
     showTasks();
   }
 });
@@ -133,7 +129,6 @@ topButtonComplete.addEventListener("click", async function (e) {
   e.preventDefault();
   flag = "complete";
   currentCompletedIndex = 0;
-  // clearBody();
   if (searchValue.style.display == "block") {
     loadMore.style = "display:none";
     loadIncompletedMore.style = "display:none";
@@ -703,9 +698,6 @@ function print(e) {
     completedTask(input);
     try {
       if (flag === "all") {
-        /* difference = Date.parse(e.completed_on) - Date.parse(e.created_at);
-        days = Math.ceil(difference / (1000 * 3600 * 24));
-        console.log(days); */
         difference = Date.parse(new Date(Date.now())) - createdAtDate;
         days = Math.floor(difference / (1000 * 3600 * 24));
         h2.style = "color: #0BC375;text-decoration: line-through;";

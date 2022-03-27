@@ -74,7 +74,6 @@ body {
   min-width: auto;
 }
 .topButton {
-  /* background: white; */
   min-width: 100px;
   min-height: 50px;
   justify-content: right;
@@ -84,7 +83,6 @@ body {
   display: flex;
   padding-right: 20px;
   height: 70px;
-  /* justify-content: right; */
 }
 .create {
   display: flex;
@@ -109,7 +107,6 @@ body {
   border-radius: 5px;
   min-width: 117px;
   min-height: 36px;
-  /* padding: 6px; */
   font-size: 16px;
   top: 80%;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
@@ -162,11 +159,9 @@ input {
 }
 .rotateDiv {
   display: flex;
-  /* position: absolute; */
   position: absolute;
   width: 50px;
   height: 47.36px;
-  top: 40%;
   left: 40%;
   text-align: middle;
 }
@@ -241,7 +236,6 @@ input {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  /* gap: 795px; */
 }
 .topButton {
   display: flex;
@@ -252,7 +246,6 @@ input {
   justify-content: space-around;
   margin-right: 135px;
   cursor: pointer;
-  /* padding-right: 136px; */
 }
 #topButtonAll,
 #topButtonComplete,
@@ -266,9 +259,6 @@ input {
   cursor: pointer;
 }
 .createdAtSpin {
-  /* display: flex;
-  align-items: center;
-  height: 47.36px; */
   position: relative;
   display: flex;
   height: 47.36px;
@@ -293,7 +283,7 @@ textarea {
   border: 3px solid #d1d8ff;
   box-sizing: border-box;
   border-radius: 5px;
-  margin: 5px;
+  margin: 10px;
   resize: none;
 }
 
@@ -340,7 +330,6 @@ textarea {
   position: relative;
   width: 50px;
   height: 47.36px;
-  top: 45%;
   left: 45%;
 }
 .splash {
@@ -400,7 +389,6 @@ textarea {
 .loadMore {
   display: flex;
   flex-wrap: wrap;
-  /* justify-content: center; */
   margin-left: 41%;
   margin-top: 20px;
 }
