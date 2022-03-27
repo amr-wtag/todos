@@ -46,7 +46,7 @@ const Toast = {
       image.alt = "tick";
       li.appendChild(image);
     }
-    li.appendChild(document.createTextNode(message));
+    li.appendChild(document.createTextNode(` ${message}`));
     ulList.appendChild(li);
     li.classList = "toast toast--visible";
 
@@ -123,7 +123,7 @@ topButtonAll.addEventListener("click", async function (e) {
     topButtonIncomplete.disabled = false;
     bigspin.style = "display:none";
   } else if (searchValue.style.display == "none") {
-    clearBody();
+    // clearBody();
     showTasks();
   }
 });
@@ -159,7 +159,6 @@ topButtonComplete.addEventListener("click", async function (e) {
     topButtonIncomplete.disabled = false;
     bigspin.style = "display:none";
   } else if (searchValue.style.display == "none") {
-    clearBody();
     showCompletedTasks();
   }
 });
@@ -171,7 +170,6 @@ topButtonIncomplete.addEventListener("click", async function (e) {
   taskInput.style = "";
   flag = "incomplete";
   currentIncompletedIndex = 0;
-  // clearBody();
   if (searchValue.style.display == "block") {
     loadMore.style = "display:none";
     loadIncompletedMore.style = "display:none";
@@ -197,7 +195,6 @@ topButtonIncomplete.addEventListener("click", async function (e) {
     topButtonIncomplete.disabled = false;
     bigspin.style = "display:none";
   } else if (searchValue.style.display == "none") {
-    clearBody();
     showIncompletedTasks();
   }
 });
@@ -234,7 +231,7 @@ addButton.addEventListener("click", async function (e) {
     taskInput.disabled = true;
     ++keycount;
     var addTodoField = document.getElementById("show");
-
+    document.getElementById("emptyScreen").style = "display:none";
     spin.style = "display:block";
     document.getElementById("createspin").style = "display:block";
     deleteAdd.classList.add("blur");
@@ -261,7 +258,7 @@ addButton.addEventListener("click", async function (e) {
       taskInput.classList.remove("blur");
       document.getElementById("createspin").style = "display:none";
       spin.style = "display:none";
-      document.getElementById("emptyScreen").style = "display:none";
+
       if (flag !== "complete") print(data[0]); // print value
 
       Toast.show("added", "success");
@@ -302,7 +299,7 @@ taskInput.onkeyup = async function (e) {
       Toast.show("Task can not be empty", "error");
     } else {
       var addTodoField = document.getElementById("show");
-
+      document.getElementById("emptyScreen").style = "display:none";
       spin.style = "display:block";
       document.getElementById("createspin").style = "display:block";
       deleteAdd.classList.add("blur");
@@ -332,8 +329,8 @@ taskInput.onkeyup = async function (e) {
         taskInput.classList.remove("blur");
 
         spin.style = "display:none";
+
         if (flag !== "complete") print(data[0]); // print value
-        document.getElementById("emptyScreen").style = "display:none";
 
         Toast.show("added", "success");
       } catch (e) {
@@ -454,6 +451,8 @@ const keyupLog = async (e) => {
 
 async function showTasks() {
   var addTodoField = document.getElementById("show");
+  maindiv.classList.add("blur");
+
   if (addTodoField.style.display === "block") {
     addTodoField.style.display = "none";
   }
@@ -475,10 +474,11 @@ async function showTasks() {
     .select()
     .order("id", { ascending: false })
     .range(currentIndex, currentIndex + 5);
-
+  if (currentIndex === 0) clearBody();
   data.map((e) => {
     print(e);
   });
+  maindiv.classList.remove("blur");
   if (splash.style.display == "block") {
     splash.classList.add("display-none");
     splash.style = "display:none";
@@ -524,10 +524,11 @@ async function showCompletedTasks() {
     .order("id", { ascending: false })
     .not("completed_on", "is", null)
     .range(currentCompletedIndex, currentCompletedIndex + 5);
-
+  if (currentCompletedIndex === 0) clearBody();
   data.map((e) => {
     print(e);
   });
+  maindiv.classList.remove("blur");
   bigspin.style = "display:none";
   topButtonAll.disabled = false;
   topButtonComplete.disabled = false;
@@ -537,7 +538,6 @@ async function showCompletedTasks() {
     loadCompletedMore.style = "display:none";
     currentCompletedIndex = 0;
   }
-  maindiv.classList.remove("blur");
 }
 function loadcompletedmore() {
   currentCompletedIndex += 6;
@@ -566,7 +566,7 @@ async function showIncompletedTasks() {
     .is("completed_on", null)
     .order("id", { ascending: false })
     .range(currentIncompletedIndex, currentIncompletedIndex + 5);
-
+  if (currentIncompletedIndex === 0) clearBody();
   data.map((e) => {
     print(e);
   });
@@ -703,8 +703,11 @@ function print(e) {
     completedTask(input);
     try {
       if (flag === "all") {
-        difference = Date.parse(new Date(Date.now())) - createdAtDate;
+        /* difference = Date.parse(e.completed_on) - Date.parse(e.created_at);
         days = Math.ceil(difference / (1000 * 3600 * 24));
+        console.log(days); */
+        difference = Date.parse(new Date(Date.now())) - createdAtDate;
+        days = Math.floor(difference / (1000 * 3600 * 24));
         h2.style = "color: #0BC375;text-decoration: line-through;";
         completed.appendChild(
           document.createTextNode(`Completed in ${days} days`),
@@ -720,6 +723,7 @@ function print(e) {
 
   deleteButton.onclick = async function (e) {
     e.preventDefault();
+    create.disabled = false;
     spin.style = "display:block";
     h2.classList.add("blur");
     h6.classList.add("blur");
@@ -828,8 +832,9 @@ function print(e) {
   var difference;
   var days;
   if (e.completed_on !== null) {
-    difference = Date.parse(e.completed_on) - Date.parse(e.created_at);
-    days = Math.ceil(difference / (1000 * 3600 * 24));
+    difference = Date.parse(e.completed_on) - createdAtDate;
+    days = Math.floor(difference / (1000 * 3600 * 24));
+    console.log(days);
   }
   createdAtSpin.classList = "createdAtSpin";
 
