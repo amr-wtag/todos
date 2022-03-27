@@ -93,6 +93,9 @@ function clearBody() {
 
 // show all tasks
 topButtonAll.addEventListener("click", async function (e) {
+  topButtonAll.classList.add("aferclickShadow");
+  topButtonComplete.classList.remove("aferclickShadow");
+  topButtonIncomplete.classList.remove("aferclickShadow");
   e.preventDefault();
   flag = "all";
   currentIndex = 0;
@@ -109,11 +112,13 @@ topButtonAll.addEventListener("click", async function (e) {
     const { data, error } = await supabase
       .from("todo")
       .select()
-      .ilike("name", `%${searchValue.value}%`);
+      .ilike("name", `%${searchValue.value}%`)
+      .order("id", { ascending: false });
     clearBody();
     data.map((e) => {
       print(e);
     });
+
     maindiv.classList.remove("blur");
     topButtonAll.disabled = false;
     topButtonComplete.disabled = false;
@@ -127,6 +132,9 @@ topButtonAll.addEventListener("click", async function (e) {
 // show completed tasks
 topButtonComplete.addEventListener("click", async function (e) {
   e.preventDefault();
+  topButtonAll.classList.remove("aferclickShadow");
+  topButtonComplete.classList.add("aferclickShadow");
+  topButtonIncomplete.classList.remove("aferclickShadow");
   flag = "complete";
   currentCompletedIndex = 0;
   if (searchValue.style.display == "block") {
@@ -143,7 +151,8 @@ topButtonComplete.addEventListener("click", async function (e) {
       .from("todo")
       .select()
       .ilike("name", `%${searchValue.value}%`)
-      .not("completed_on", "is", null);
+      .not("completed_on", "is", null)
+      .order("id", { ascending: false });
     clearBody();
     data.map((e) => {
       print(e);
@@ -162,6 +171,9 @@ topButtonComplete.addEventListener("click", async function (e) {
 
 topButtonIncomplete.addEventListener("click", async function (e) {
   e.preventDefault();
+  topButtonAll.classList.remove("aferclickShadow");
+  topButtonComplete.classList.remove("aferclickShadow");
+  topButtonIncomplete.classList.add("aferclickShadow");
   taskInput.style = "";
   flag = "incomplete";
   currentIncompletedIndex = 0;
@@ -179,7 +191,8 @@ topButtonIncomplete.addEventListener("click", async function (e) {
       .from("todo")
       .select()
       .ilike("name", `%${searchValue.value}%`)
-      .is("completed_on", null);
+      .is("completed_on", null)
+      .order("id", { ascending: false });
     clearBody();
     data.map((e) => {
       print(e);
@@ -346,11 +359,14 @@ function searchToggle() {
     searchValue.style.display = "block";
   } else {
     searchValue.style.display = "none";
-    searchValue.value = null;
-    clearBody();
-    if (flag == "all") showTasks();
-    else if (flag == "complete") showCompletedTasks();
-    else showIncompletedTasks();
+
+    if (searchChange === true && searchValue.value.length !== 0) {
+      searchValue.value = null;
+      searchChange = false;
+      if (flag == "all") showTasks();
+      else if (flag == "complete") showCompletedTasks();
+      else showIncompletedTasks();
+    }
   }
 }
 
@@ -367,18 +383,19 @@ const debounce = (fn, delay) => {
     timer = setTimeout(later, delay);
   };
 };
-
+var searchChange = false;
 //search Input
 const initApp = () => {
   searchValue.addEventListener("keyup", debounce(keyupLog, 500));
 };
 document.addEventListener("DOMContentLoaded", initApp);
-//keyup log
+//keyup log of search value
 const keyupLog = async (e) => {
   e.preventDefault();
   const text = searchValue.value;
   var blur = maindiv;
   if (text.length > 2) {
+    searchChange = true;
     loadMore.style = "display:none";
     loadIncompletedMore.style = "display:none";
     loadCompletedMore.style = "display:none";
@@ -391,7 +408,8 @@ const keyupLog = async (e) => {
       const { data, error } = await supabase
         .from("todo")
         .select()
-        .ilike("name", `%${text}%`);
+        .ilike("name", `%${text}%`)
+        .order("id", { ascending: false });
       clearBody();
       data.map((e) => {
         print(e);
@@ -401,7 +419,8 @@ const keyupLog = async (e) => {
         .from("todo")
         .select()
         .ilike("name", `%${text}%`)
-        .not("completed_on", "is", null);
+        .not("completed_on", "is", null)
+        .order("id", { ascending: false });
       clearBody();
       data.map((e) => {
         print(e);
@@ -411,7 +430,8 @@ const keyupLog = async (e) => {
         .from("todo")
         .select()
         .ilike("name", `%${text}%`)
-        .is("completed_on", null);
+        .is("completed_on", null)
+        .order("id", { ascending: false });
       clearBody();
 
       data.map((e) => {
@@ -435,7 +455,6 @@ const keyupLog = async (e) => {
     topButtonAll.disabled = false;
     topButtonComplete.disabled = false;
     topButtonIncomplete.disabled = false;
-    clearBody();
     if (flag == "all") showTasks();
     else if (flag == "complete") showCompletedTasks();
     else showIncompletedTasks();
@@ -731,57 +750,25 @@ function print(e) {
 
   save.onclick = async function (e) {
     e.preventDefault();
-    create.disabled = false;
-
-    h6.style = "display:block";
-    input.style = "display: none;";
-    h2.style = "display: block";
-    editButton.style = "display: block;";
-    save.style = "display: none";
-    spin.style = "display:block";
-
-    h2.classList.add("blur");
-    h6.classList.add("blur");
-    buttonDiv.classList.add("blur");
-    input.disabled = true;
-    input.value = input.value.split("\n")[0];
-    try {
-      const { data, error } = await supabase
-        .from("todo")
-        .update({ name: input.value })
-        .match({ id: input.id });
-      Toast.show("Changes are saved successfully", "success");
-    } catch (e) {
-      Toast.show(e, "error");
-    }
-    h2.innerHTML = "";
-    h2.appendChild(document.createTextNode(input.value));
-    h2.classList.remove("blur");
-    h6.classList.remove("blur");
-    buttonDiv.classList.remove("blur");
-    spin.style = "display:none";
-    input.disabled = false;
-  };
-
-  // enter press
-  input.onkeyup = async function (e) {
-    e.preventDefault();
-
-    if (e.key == "Enter") {
-      input.disabled = true;
-      e.key.disabled = true;
+    if (input.value.length === 0) {
+      Toast.show("Task can not be empty", "error");
+      input.focus();
+    } else {
       create.disabled = false;
-      input.value = input.value.trim("\n");
+
       h6.style = "display:block";
       input.style = "display: none;";
       h2.style = "display: block";
       editButton.style = "display: block;";
       save.style = "display: none";
       spin.style = "display:block";
+
       h2.classList.add("blur");
       h6.classList.add("blur");
       buttonDiv.classList.add("blur");
+      input.disabled = true;
       input.value = input.value.split("\n")[0];
+
       try {
         const { data, error } = await supabase
           .from("todo")
@@ -797,8 +784,51 @@ function print(e) {
       h6.classList.remove("blur");
       buttonDiv.classList.remove("blur");
       spin.style = "display:none";
-      e.key.disabled = false;
       input.disabled = false;
+    }
+  };
+
+  // enter press
+  input.onkeyup = async function (e) {
+    e.preventDefault();
+    input.value = input.value.trim("\n");
+    if (e.key == "Enter") {
+      if (input.value.length === 0) {
+        Toast.show("Task can not be empty", "error");
+        input.focus();
+      } else {
+        input.disabled = true;
+        e.key.disabled = true;
+        create.disabled = false;
+        input.value = input.value.trim("\n");
+        h6.style = "display:block";
+        input.style = "display: none;";
+        h2.style = "display: block";
+        editButton.style = "display: block;";
+        save.style = "display: none";
+        spin.style = "display:block";
+        h2.classList.add("blur");
+        h6.classList.add("blur");
+        buttonDiv.classList.add("blur");
+        input.value = input.value.split("\n")[0];
+        try {
+          const { data, error } = await supabase
+            .from("todo")
+            .update({ name: input.value })
+            .match({ id: input.id });
+          Toast.show("Changes are saved successfully", "success");
+        } catch (e) {
+          Toast.show(e, "error");
+        }
+        h2.innerHTML = "";
+        h2.appendChild(document.createTextNode(input.value));
+        h2.classList.remove("blur");
+        h6.classList.remove("blur");
+        buttonDiv.classList.remove("blur");
+        spin.style = "display:none";
+        e.key.disabled = false;
+        input.disabled = false;
+      }
     }
   };
 
@@ -826,7 +856,6 @@ function print(e) {
   if (e.completed_on !== null) {
     difference = Date.parse(e.completed_on) - createdAtDate;
     days = Math.floor(difference / (1000 * 3600 * 24));
-    console.log(days);
   }
   createdAtSpin.classList = "createdAtSpin";
 
