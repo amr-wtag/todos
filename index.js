@@ -81,6 +81,7 @@ async function checkEmpty() {
   }
 }
 checkEmpty();
+topButtonAll.classList.add("aferclickShadow");
 showTasks();
 
 //clear body
@@ -226,15 +227,16 @@ var keycount = 0;
 // add value
 addButton.addEventListener("click", async function (e) {
   e.preventDefault();
-  taskInput.value = taskInput.value.split("\n")[0];
+  // taskInput.value = taskInput.value.split("\n")[0];
   taskInput.value = taskInput.value.trim("\n");
   var spin = document.createElement("img");
   spin.src = "./images/bigspin.svg";
   spin.alt = "spin";
   spin.classList = "spinning rotateDiv";
   addFlag = 1;
-  if (taskInput.value.length === 0) {
-    Toast.show("Task can not be empty", "error");
+  if (taskInput.value.length < 3) {
+    Toast.show("Task length can not be less than 3", "error");
+    taskInput.focus();
   } else if (keycount === 0) {
     taskInput.disabled = true;
     ++keycount;
@@ -295,16 +297,17 @@ taskInput.onkeyup = async function (e) {
   e.preventDefault();
   if (e.key == "Enter" && keycount === 0) {
     ++keycount;
-    taskInput.disabled = true;
-    taskInput.value = taskInput.value.split("\n")[0];
+    // taskInput.value = taskInput.value.split("\n")[0]; //this may be used in future
     taskInput.value = taskInput.value.trim("\n");
     var spin = document.createElement("img");
     spin.src = "./images/bigspin.svg";
     spin.alt = "spin";
     spin.classList = "spinning rotateDiv";
     addFlag = 1;
-    if (taskInput.value.length === 0) {
-      Toast.show("Task can not be empty", "error");
+    if (taskInput.value.length < 3) {
+      Toast.show("Task length can not be less than 3", "error");
+      taskInput.focus();
+      console.log(e.key);
     } else {
       var addTodoField = document.getElementById("show");
       document.getElementById("emptyScreen").style = "display:none";
@@ -750,8 +753,8 @@ function print(e) {
 
   save.onclick = async function (e) {
     e.preventDefault();
-    if (input.value.length === 0) {
-      Toast.show("Task can not be empty", "error");
+    if (input.value.length < 3) {
+      Toast.show("Task length can not be less than 3", "error");
       input.focus();
     } else {
       create.disabled = false;
@@ -793,8 +796,8 @@ function print(e) {
     e.preventDefault();
     input.value = input.value.trim("\n");
     if (e.key == "Enter") {
-      if (input.value.length === 0) {
-        Toast.show("Task can not be empty", "error");
+      if (input.value.length < 3) {
+        Toast.show("Task length can not be less than 3", "error");
         input.focus();
       } else {
         input.disabled = true;
