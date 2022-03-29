@@ -1,12 +1,22 @@
   <!DOCTYPE html>
   <html lang="en">
     <head>
-      <div id="splash" class="splash" style="display: block;">
+      <meta charset="UTF-8" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+      
+      
+      <link rel="stylesheet" type="text/css" href="./styles.css" />
+      
+      <title>Document</title>
+    </head>
+    <body >
+<div id="splash" class="splash" style="display: block;">
        <div ><img src="./images/splashLeaf.svg" alt="splashLeaf"> <img src="./images/splashTodos.svg" alt="splash_Todos">
         </div>
       </div>
-      <div>
-  <header class="header">
+      <header class="header">
       <div>
         <img src="./images/leaf_1.svg" alt="logo" /><img
           src="./images/Todos.svg"
@@ -20,7 +30,7 @@
           value=""
           style="display: none"
         />
-        <button id="search"  onclick="searchToggle()" style="cursor: pointer;border: none; background: none;">
+        <button id="search" style="cursor: pointer;border: none; background: none;">
         <img
           id="'searchImg"
           
@@ -29,17 +39,6 @@
         /></button>
       </div>
     </header>
-      <meta charset="UTF-8" />
-      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <script  defer src="./index.js"  ></script>
-      <script type="module" defer src="./server.js"></script>
-      <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-      <link rel="stylesheet" type="text/css" href="./styles.css" />
-      
-      <title>Document</title>
-    </head>
-    <body >
       
      <div id="toasted" ></div>
       <div class="fullBody">
@@ -50,7 +49,7 @@
           <button
             type="submit"
             id="Create" class="create"
-            onclick="toggle()"><img id="plus" class="plus" src="./images/plus.svg" alt="plus">Create</button> <div class="top"  >
+            ><img id="plus" class="plus" src="./images/plus.svg" alt="plus">Create</button> <div class="top"  >
               <div class="topButton">
       <button id="topButtonAll">All</button><button id="topButtonIncomplete">Incomplete</button><button id="topButtonComplete">Complete</button></div>
     </div>
@@ -95,11 +94,11 @@
         <div class="loadMore" style="align-items: center;">
           
         <div id="loadMore"  style="display: block;">
-          <button class="loadMoreBtnContainer" onclick="loadmore()"style="display: block;">load more</button>
+          <button class="loadMoreBtnContainer" style="display: block;">load more</button>
         </div><div id="loadCompletedMore"  style="display: block;">
-          <button class="loadMoreBtnContainer" onclick="loadcompletedmore()"style="display: block;">load more</button>
+          <button class="loadMoreBtnContainer" style="display: block;">load more</button>
         </div><div id="loadIncompletedMore"  style="display: block;">
-          <button class="loadMoreBtnContainer" onclick="loadincompletedmore()"style="display: block;">load more</button>
+          <button class="loadMoreBtnContainer" style="display: block;">load more</button>
         </div></div>
         </div>
       </section>
@@ -127,5 +126,7 @@
           </div>
         </section></div>
     </body>
+
+    <script type="module" src="./index.js"></script>
   </html>
-</div>
+
