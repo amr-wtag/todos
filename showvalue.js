@@ -112,12 +112,14 @@ export function showvalue(e, addFlag) {
     h2.classList.add("blur");
     h6.classList.add("blur");
     buttonDiv.classList.add("blur");
+    completed.classList.add("blur");
     await deleted(input);
     show("Deleted task", "success");
     spin.style = "display:none";
     h2.classList.remove("blur");
     h6.classList.remove("blur");
     buttonDiv.classList.remove("blur");
+    completed.classList.remove("blur");
     maindiv.removeChild(div);
   };
 
