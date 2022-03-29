@@ -213,6 +213,7 @@ document.addEventListener("DOMContentLoaded", function () {
           addTodoField.style.display = "none";
         }
         taskInput.value = "";
+        datacount = parseInt(localStorage.getItem("datacount"));
         datacount++;
         localStorage.setItem("datacount", datacount);
         if (topButtonAll.disabled === true) {
@@ -270,7 +271,9 @@ document.addEventListener("DOMContentLoaded", function () {
           }
           taskInput.value = "";
           document.getElementById("createspin").style = "display:none";
+          datacount = parseInt(localStorage.getItem("datacount"));
           datacount++;
+
           localStorage.setItem("datacount", datacount);
           if (topButtonAll.disabled === true) {
             topButtonAll.disabled = false;

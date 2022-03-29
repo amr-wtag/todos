@@ -7,7 +7,7 @@ var topButtonAll = document.getElementById("topButtonAll");
 var topButtonComplete = document.getElementById("topButtonComplete");
 var topButtonIncomplete = document.getElementById("topButtonIncomplete");
 var create = document.getElementById("Create");
-var datacount = parseInt(localStorage.getItem("datacount"));
+
 export function showvalue(e, addFlag) {
   var div = document.createElement("div");
   var textareaH2Div = document.createElement("div");
@@ -82,9 +82,7 @@ export function showvalue(e, addFlag) {
     buttonDiv.removeChild(editButton);
     await completedTask(input);
     try {
-      if (
-        /* flag === "all" */ topButtonAll.classList.contains("aferclickShadow")
-      ) {
+      if (topButtonAll.classList.contains("aferclickShadow")) {
         difference = Date.parse(new Date(Date.now())) - createdAtDate;
         days = Math.floor(difference / (1000 * 3600 * 24));
         h2.style = "color: #0BC375;text-decoration: line-through;";
@@ -248,13 +246,15 @@ async function deleted(e) {
     .from("todo")
     .delete()
     .match({ id: e.id });
+  var datacount = parseInt(localStorage.getItem("datacount"));
   datacount--;
+  console.log(datacount);
   localStorage.setItem("datacount", datacount);
   if (datacount < 1) {
     loadMore.style = "display:none";
-    currentIndex = 0;
+    /* currentIndex = 0;
     currentCompletedIndex = 0;
-    currentIncompletedIndex = 0;
+    currentIncompletedIndex = 0; */
     document.getElementById("emptyScreen").style = "display:block";
     topButtonAll.disabled = true;
     topButtonComplete.disabled = true;

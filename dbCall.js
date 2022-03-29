@@ -2,6 +2,7 @@ import supabase from "./server.js";
 
 export async function checkEmptyDB() {
   const { data } = await supabase.from("todo").select();
+  localStorage.setItem("datacount", data.length);
   return data.length;
 }
 
