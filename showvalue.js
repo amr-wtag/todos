@@ -142,14 +142,10 @@ export function showvalue(e, addFlag) {
       h2.classList.add("blur");
       h6.classList.add("blur");
       buttonDiv.classList.add("blur");
-      // input.value = input.value.trim(" ");
-      // // input.value = input.value.split("\n")[0];
-      // input.value = input.value.trim("\n");
-
       try {
         input.value = input.value.trim(" ");
         input.value = input.value.trim("\n");
-
+        input.value = input.value.split("\n")[0];
         const data = await updateData(input);
         show("Changes are saved successfully", "success");
       } catch (e) {
@@ -169,11 +165,16 @@ export function showvalue(e, addFlag) {
   input.onkeyup = async function (e) {
     e.preventDefault();
     if (e.key == "Enter") {
+      input.value = input.value.trim("\n");
+      input.disabled = true;
       if (input.value.length < 3) {
         show("Task length can not be less than 3", "error");
+        input.value = input.value.trim(" ");
+        input.value = input.value.trim("\n");
+        input.value = input.value.split("\n")[0];
+        input.disabled = false;
         input.focus();
       } else {
-        input.disabled = true;
         create.disabled = false;
         h6.style = "display:block";
         input.style = "display: none;";
@@ -184,10 +185,11 @@ export function showvalue(e, addFlag) {
         h2.classList.add("blur");
         h6.classList.add("blur");
         buttonDiv.classList.add("blur");
-        // input.value = input.value.split("\n")[0]; // maybe need in future
+
         try {
           input.value = input.value.trim(" ");
           input.value = input.value.trim("\n");
+          input.value = input.value.split("\n")[0];
           const data = await updateData(input);
           show("Changes are saved successfully", "success");
         } catch (e) {
@@ -264,9 +266,6 @@ async function deleted(e) {
   localStorage.setItem("datacount", datacount);
   if (datacount < 1) {
     loadMore.style = "display:none";
-    /* currentIndex = 0;
-    currentCompletedIndex = 0;
-    currentIncompletedIndex = 0; */
     document.getElementById("emptyScreen").style = "display:block";
     topButtonAll.disabled = true;
     topButtonComplete.disabled = true;
