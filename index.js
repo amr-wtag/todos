@@ -74,62 +74,66 @@ document.addEventListener("DOMContentLoaded", function () {
     topButtonComplete.classList.remove("aferclickShadow");
     topButtonIncomplete.classList.remove("aferclickShadow");
     e.preventDefault();
-    flag = "all";
-    currentIndex = 0;
-    if (searchValue.style.display == "block") {
-      loadMore.style = "display:none";
-      loadIncompletedMore.style = "display:none";
-      loadCompletedMore.style = "display:none";
-      bigspin.style = "display:block";
-      topButtonAll.disabled = true;
-      topButtonComplete.disabled = true;
-      topButtonIncomplete.disabled = true;
-      maindiv.classList.add("blur");
-      const data = await topButtonAllSearch(searchValue.value);
-      clearBody();
-      data.map((e) => {
-        showvalue(e);
-      });
+    if (flag !== "all") {
+      flag = "all";
+      currentIndex = 0;
+      if (searchValue.style.display == "block") {
+        loadMore.style = "display:none";
+        loadIncompletedMore.style = "display:none";
+        loadCompletedMore.style = "display:none";
+        bigspin.style = "display:block";
+        topButtonAll.disabled = true;
+        topButtonComplete.disabled = true;
+        topButtonIncomplete.disabled = true;
+        maindiv.classList.add("blur");
+        const data = await topButtonAllSearch(searchValue.value);
+        clearBody();
+        data.map((e) => {
+          showvalue(e);
+        });
 
-      maindiv.classList.remove("blur");
-      topButtonAll.disabled = false;
-      topButtonComplete.disabled = false;
-      topButtonIncomplete.disabled = false;
-      bigspin.style = "display:none";
-    } else if (searchValue.style.display == "none") {
-      showTasks();
+        maindiv.classList.remove("blur");
+        topButtonAll.disabled = false;
+        topButtonComplete.disabled = false;
+        topButtonIncomplete.disabled = false;
+        bigspin.style = "display:none";
+      } else if (searchValue.style.display == "none") {
+        showTasks();
+      }
     }
   });
 
   // show completed tasks
   topButtonComplete.addEventListener("click", async function (e) {
     e.preventDefault();
-    topButtonAll.classList.remove("aferclickShadow");
-    topButtonComplete.classList.add("aferclickShadow");
-    topButtonIncomplete.classList.remove("aferclickShadow");
-    flag = "complete";
-    currentCompletedIndex = 0;
-    if (searchValue.style.display == "block") {
-      loadMore.style = "display:none";
-      loadIncompletedMore.style = "display:none";
-      loadCompletedMore.style = "display:none";
-      bigspin.style = "display:block";
-      topButtonAll.disabled = true;
-      topButtonComplete.disabled = true;
-      topButtonIncomplete.disabled = true;
-      maindiv.classList.add("blur");
-      const data = await topButtonCompleteSearch(searchValue.value);
-      clearBody();
-      data.map((e) => {
-        showvalue(e);
-      });
-      maindiv.classList.remove("blur");
-      topButtonAll.disabled = false;
-      topButtonComplete.disabled = false;
-      topButtonIncomplete.disabled = false;
-      bigspin.style = "display:none";
-    } else if (searchValue.style.display == "none") {
-      showCompletedTasks();
+    if (flag !== "complete") {
+      topButtonAll.classList.remove("aferclickShadow");
+      topButtonComplete.classList.add("aferclickShadow");
+      topButtonIncomplete.classList.remove("aferclickShadow");
+      flag = "complete";
+      currentCompletedIndex = 0;
+      if (searchValue.style.display == "block") {
+        loadMore.style = "display:none";
+        loadIncompletedMore.style = "display:none";
+        loadCompletedMore.style = "display:none";
+        bigspin.style = "display:block";
+        topButtonAll.disabled = true;
+        topButtonComplete.disabled = true;
+        topButtonIncomplete.disabled = true;
+        maindiv.classList.add("blur");
+        const data = await topButtonCompleteSearch(searchValue.value);
+        clearBody();
+        data.map((e) => {
+          showvalue(e);
+        });
+        maindiv.classList.remove("blur");
+        topButtonAll.disabled = false;
+        topButtonComplete.disabled = false;
+        topButtonIncomplete.disabled = false;
+        bigspin.style = "display:none";
+      } else if (searchValue.style.display == "none") {
+        showCompletedTasks();
+      }
     }
   });
 
@@ -137,34 +141,36 @@ document.addEventListener("DOMContentLoaded", function () {
 
   topButtonIncomplete.addEventListener("click", async function (e) {
     e.preventDefault();
-    topButtonAll.classList.remove("aferclickShadow");
-    topButtonComplete.classList.remove("aferclickShadow");
-    topButtonIncomplete.classList.add("aferclickShadow");
-    taskInput.style = "";
-    flag = "incomplete";
-    currentIncompletedIndex = 0;
-    if (searchValue.style.display == "block") {
-      loadMore.style = "display:none";
-      loadIncompletedMore.style = "display:none";
-      loadCompletedMore.style = "display:none";
-      bigspin.style = "display:block";
-      topButtonAll.disabled = true;
-      topButtonComplete.disabled = true;
-      topButtonIncomplete.disabled = true;
-      maindiv.classList.add("blur");
-      const data = await topButtonIncompleteSearch(searchValue.value);
+    if (flag !== "incomplete") {
+      topButtonAll.classList.remove("aferclickShadow");
+      topButtonComplete.classList.remove("aferclickShadow");
+      topButtonIncomplete.classList.add("aferclickShadow");
+      taskInput.style = "";
+      flag = "incomplete";
+      currentIncompletedIndex = 0;
+      if (searchValue.style.display == "block") {
+        loadMore.style = "display:none";
+        loadIncompletedMore.style = "display:none";
+        loadCompletedMore.style = "display:none";
+        bigspin.style = "display:block";
+        topButtonAll.disabled = true;
+        topButtonComplete.disabled = true;
+        topButtonIncomplete.disabled = true;
+        maindiv.classList.add("blur");
+        const data = await topButtonIncompleteSearch(searchValue.value);
 
-      clearBody();
-      data.map((e) => {
-        showvalue(e);
-      });
-      maindiv.classList.remove("blur");
-      topButtonAll.disabled = false;
-      topButtonComplete.disabled = false;
-      topButtonIncomplete.disabled = false;
-      bigspin.style = "display:none";
-    } else if (searchValue.style.display == "none") {
-      showIncompletedTasks();
+        clearBody();
+        data.map((e) => {
+          showvalue(e);
+        });
+        maindiv.classList.remove("blur");
+        topButtonAll.disabled = false;
+        topButtonComplete.disabled = false;
+        topButtonIncomplete.disabled = false;
+        bigspin.style = "display:none";
+      } else if (searchValue.style.display == "none") {
+        showIncompletedTasks();
+      }
     }
   });
 
@@ -228,7 +234,7 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("createspin").style = "display:none";
         spin.style = "display:none";
 
-        if (flag !== "complete") await showvalue(data[0], 1); // showvalue value
+        if (flag !== "complete") showvalue(data[0], 1); // showvalue value
 
         show("added", "success");
       } catch (e) {
@@ -287,7 +293,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
           spin.style = "display:none";
 
-          if (flag !== "complete") await showvalue(data[0], 1); // showvalue value
+          if (flag !== "complete") showvalue(data[0], 1); // showvalue value
 
           show("added", "success");
         } catch (e) {
@@ -323,7 +329,6 @@ document.addEventListener("DOMContentLoaded", function () {
   const debounce = (fn, delay) => {
     let timer;
     return (...args) => {
-      const context = this;
       const later = () => {
         timer = null;
         fn.call(this, ...args);

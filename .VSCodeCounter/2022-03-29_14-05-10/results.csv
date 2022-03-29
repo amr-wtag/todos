@@ -1,0 +1,26 @@
+"filename", "language", "JavaScript", "Markdown", "XML", "CSS", "HTML", "comment", "blank", "total"
+"/Users/mridha/todos/todos/README.md", "Markdown", 0, 1, 0, 0, 0, 0, 0, 1
+"/Users/mridha/todos/todos/clear.js", "JavaScript", 7, 0, 0, 0, 0, 0, 1, 8
+"/Users/mridha/todos/todos/datacount.js", "JavaScript", 3, 0, 0, 0, 0, 0, 1, 4
+"/Users/mridha/todos/todos/dbCall.js", "JavaScript", 77, 0, 0, 0, 0, 1, 4, 82
+"/Users/mridha/todos/todos/images/Todos.svg", "XML", 0, 0, 3, 0, 0, 0, 1, 4
+"/Users/mridha/todos/todos/images/Vector.svg", "XML", 0, 0, 3, 0, 0, 0, 1, 4
+"/Users/mridha/todos/todos/images/You didn’t add any task. Please, add one..svg", "XML", 0, 0, 3, 0, 0, 0, 1, 4
+"/Users/mridha/todos/todos/images/bigspin.svg", "XML", 0, 0, 3, 0, 0, 0, 1, 4
+"/Users/mridha/todos/todos/images/edit.svg", "XML", 0, 0, 3, 0, 0, 0, 1, 4
+"/Users/mridha/todos/todos/images/leaf_1.svg", "XML", 0, 0, 10, 0, 0, 0, 1, 11
+"/Users/mridha/todos/todos/images/plus.svg", "XML", 0, 0, 3, 0, 0, 0, 1, 4
+"/Users/mridha/todos/todos/images/search.svg", "XML", 0, 0, 3, 0, 0, 0, 1, 4
+"/Users/mridha/todos/todos/images/splashLeaf.svg", "XML", 0, 0, 3, 0, 0, 0, 1, 4
+"/Users/mridha/todos/todos/images/splashTodos.svg", "XML", 0, 0, 3, 0, 0, 0, 1, 4
+"/Users/mridha/todos/todos/images/success.svg", "XML", 0, 0, 3, 0, 0, 0, 1, 4
+"/Users/mridha/todos/todos/images/tick.svg", "XML", 0, 0, 3, 0, 0, 0, 1, 4
+"/Users/mridha/todos/todos/images/undraw_add_files_re_v09g 1.svg", "XML", 0, 0, 26, 0, 0, 0, 1, 27
+"/Users/mridha/todos/todos/index.html", "HTML", 0, 0, 0, 0, 118, 0, 15, 133
+"/Users/mridha/todos/todos/index.js", "JavaScript", 463, 0, 0, 0, 0, 17, 40, 520
+"/Users/mridha/todos/todos/server.js", "JavaScript", 4, 0, 0, 0, 0, 1, 2, 7
+"/Users/mridha/todos/todos/showvalue.js", "JavaScript", 254, 0, 0, 0, 0, 2, 19, 275
+"/Users/mridha/todos/todos/styles.css", "CSS", 0, 0, 0, 399, 0, 2, 12, 413
+"/Users/mridha/todos/todos/toast.js", "JavaScript", 24, 0, 0, 0, 0, 0, 2, 26
+"/Users/mridha/todos/todos/toggleFunctions.js", "JavaScript", 28, 0, 0, 0, 0, 0, 2, 30
+"Total", "-", 860, 1, 69, 399, 118, 23, 111, 1581
