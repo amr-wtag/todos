@@ -80,7 +80,13 @@ export function showvalue(e, addFlag) {
     spin.style = "display:block";
     buttonDiv.removeChild(completeButton);
     buttonDiv.removeChild(editButton);
+    h2.classList.add("blur");
+    h6.classList.add("blur");
+    buttonDiv.classList.add("blur");
     await completedTask(input);
+    h2.classList.remove("blur");
+    h6.classList.remove("blur");
+    buttonDiv.classList.remove("blur");
     try {
       if (topButtonAll.classList.contains("aferclickShadow")) {
         difference = Date.parse(new Date(Date.now())) - createdAtDate;
@@ -134,10 +140,14 @@ export function showvalue(e, addFlag) {
       h2.classList.add("blur");
       h6.classList.add("blur");
       buttonDiv.classList.add("blur");
-      input.value = input.value.trim(" ");
-      input.value = input.value.split("\n")[0];
+      // input.value = input.value.trim(" ");
+      // // input.value = input.value.split("\n")[0];
+      // input.value = input.value.trim("\n");
 
       try {
+        input.value = input.value.trim(" ");
+        input.value = input.value.trim("\n");
+
         const data = await updateData(input);
         show("Changes are saved successfully", "success");
       } catch (e) {
@@ -172,7 +182,7 @@ export function showvalue(e, addFlag) {
         h2.classList.add("blur");
         h6.classList.add("blur");
         buttonDiv.classList.add("blur");
-        input.value = input.value.split("\n")[0]; // maybe need in future
+        // input.value = input.value.split("\n")[0]; // maybe need in future
         try {
           input.value = input.value.trim(" ");
           input.value = input.value.trim("\n");
