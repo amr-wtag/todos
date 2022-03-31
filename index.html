@@ -1,12 +1,132 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-<body>
-  
-</body>
-</html>
+  <!DOCTYPE html>
+  <html lang="en">
+    <head>
+      <meta charset="UTF-8" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+      
+      
+      <link rel="stylesheet" type="text/css" href="./styles.css" />
+      
+      <title>Document</title>
+    </head>
+    <body >
+<div id="splash" class="splash" style="display: block;">
+       <div ><img src="./images/splashLeaf.svg" alt="splashLeaf"> <img src="./images/splashTodos.svg" alt="splash_Todos">
+        </div>
+      </div>
+      <header class="header">
+      <div>
+        <img src="./images/leaf_1.svg" alt="logo" /><img
+          src="./images/Todos.svg"
+          alt="title"
+        />
+      </div>
+      <div class="searchDiv">
+        <input
+          id="searchInput"
+          placeholder="give at least 3 character"
+          value=""
+          style="display: none"
+        />
+        <button id="search" style="cursor: pointer;border: none; background: none;">
+        <img
+          id="'searchImg"
+          
+          src="./images/search.svg"
+          alt="search"
+        /></button>
+      </div>
+    </header>
+      
+     <div id="toasted" ></div>
+      <div class="fullBody">
+      <div > 
+        <form id="toDoForm">
+        <h1 class="addTaskH1">Add Tasks</h1>
+        <div class="headerClass" >
+          <button
+            type="submit"
+            id="Create" class="create"
+            ><img id="plus" class="plus" src="./images/plus.svg" alt="plus">Create</button> <div class="top"  >
+              <div class="topButton">
+      <button id="topButtonAll">All</button><button id="topButtonIncomplete">Incomplete</button><button id="topButtonComplete">Complete</button></div>
+    </div>
+          </div>
+         
+      </form>
+    
+    </div>
+      
+    <section>
+      <form id="showForm">
+      <div id="id01" class="container">
+         <div id="show" class="divClassShow" style="display: none;">
+         <div><textarea
+            id="toDoInput"
+            class="toDo"
+            placeholder="Enter todo tasks"
+            value=""
+             ></textarea>
+             <div class="showSpin" ><img src="./images/bigspin.svg" id="createspin" class="spinning rotateDiv " alt="createspin" style="display: none;" >
+          </div>
+          <div class="addDel"> <button
+            type="submit"
+            id="addButton"
+            class="addButton"
+          >
+            Add
+          </button>
+        <button id="deleteAdd" class="boxedButton"> <img id="deleteAdd" src="./images/Vector.svg" alt="delete"></button></div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </section>
+ <div> <section>
+  <img src="./images/bigspin.svg" id="bigspin" class="spinning rotateFull" alt="bigspin" style="display: none;" >
+ </section>
+</div>
+
+  <div><section>
+    
+        <div class="loadMore" style="align-items: center;">
+          
+        <div id="loadMore"  style="display: block;">
+          <button class="loadMoreBtnContainer" style="display: block;">load more</button>
+        </div><div id="loadCompletedMore"  style="display: block;">
+          <button class="loadMoreBtnContainer" style="display: block;">load more</button>
+        </div><div id="loadIncompletedMore"  style="display: block;">
+          <button class="loadMoreBtnContainer" style="display: block;">load more</button>
+        </div></div>
+        </div>
+      </section>
+        <div id="noShow"><div id="show" class="divClass" style="display: none;">
+         <div><input
+            id="toDoInput"
+            class="toDo"
+            placeholder="Enter Task"
+            value=""
+             >
+         </input><div>
+         <button
+            type="submit"
+            id="addButton"
+          >
+            Add
+          </button>
+         <img id="deleteAdd" src="./images/Vector.svg" alt="delete">
+          </div>
+        </div></div></div>
+        <section>
+          <div id="emptyScreen" class="emptyScreen" style="display:none">
+            <img src="./images/undraw_add_files_re_v09g 1.svg" alt="emptyScreen"/><br>
+            <img src="./images/You didn’t add any task. Please, add one..svg" alt="didn’t"/>
+          </div>
+        </section></div>
+    </body>
+
+    <script type="module" src="./index.js"></script>
+  </html>
+
