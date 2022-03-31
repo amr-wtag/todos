@@ -248,20 +248,22 @@ document.addEventListener("DOMContentLoaded", function () {
   // add task after enter
   taskInput.onkeyup = async function (e) {
     e.preventDefault();
-    if (e.key == "Enter" && keycount === 0) {
-      ++keycount;
+    if (e.key == "Enter") {
       // taskInput.value = taskInput.value.split("\n")[0]; //this may be used in future
+      taskInput.disabled = true;
       taskInput.value = taskInput.value.trim("\n");
       var spin = document.createElement("img");
       spin.src = "./images/bigspin.svg";
       spin.alt = "spin";
       spin.classList = "spinning rotateDiv";
-      // addFlag = 1;
       if (taskInput.value.length < 3) {
         show("Task length can not be less than 3", "error");
+        taskInput.disabled = false;
         taskInput.focus();
-        console.log(e.key);
-      } else {
+      } else if (keycount === 0) {
+        taskInput.disabled = true;
+        ++keycount;
+        taskInput.value = taskInput.value.split("\n")[0];
         var addTodoField = document.getElementById("show");
         document.getElementById("emptyScreen").style = "display:none";
         spin.style = "display:block";
